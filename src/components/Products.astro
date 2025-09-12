@@ -1,0 +1,292 @@
+---
+export interface Props {
+  products: Array<{
+    id: string;
+    name: string;
+    price: number;
+    image: string;
+    description: string;
+    category: string;
+    stripePriceId: string;
+  }>;
+  title: string;
+  showFilters?: boolean;
+}
+
+const { products, title, showFilters = false } = Astro.props;
+
+// Get unique categories for filtering
+const categories = [...new Set(products.map(product => product.category))];
+---
+
+<div class="products-container">
+  <h1 class="products-title">{title}</h1>
+  
+  {showFilters && (
+    <div class="filters">
+      <button class="filter-btn active" data-category="all">All</button>
+      {categories.map(category => (
+        <button class="filter-btn" data-category={category.toLowerCase()}>{category}</button>
+      ))}
+    </div>
+  )}
+  
+  <div class="products-grid">
+    {products.map(product => (
+      <div class="product-card" data-category={product.category.toLowerCase()}>
+        <div class="product-image">
+          <img src={product.image} alt={product.name} />
+        </div>
+        <div class="product-info">
+          <h3 class="product-name">{product.name}</h3>
+          <p class="product-description">{product.description}</p>
+          <div class="product-footer">
+            <span class="product-price">${product.price.toFixed(2)}</span>
+            <span class="product-category">{product.category}</span>
+          </div>
+          <button class="add-to-cart-btn" data-price-id={product.stripePriceId}>
+            Buy Now
+          </button>
+        </div>
+      </div>
+    ))}
+  </div>
+</div>
+
+<style>
+  .products-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+
+  .products-title {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    color: #4E4E4E;
+    font-family: 'Special Elite', cursive;
+  }
+
+  .filters {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 3rem;
+    flex-wrap: wrap;
+  }
+
+  .filter-btn {
+    padding: 0.5rem 1rem;
+    border: 2px solid #A95A70;
+    background: transparent;
+    color: #A95A70;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+  }
+
+  .filter-btn:hover,
+  .filter-btn.active {
+    background: #A95A70;
+    color: #FFFBF5;
+  }
+
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+  }
+
+  .product-card {
+    background: #FFFBF5;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid #f0f0f0;
+  }
+
+  .product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  }
+
+  .product-image {
+    width: 100%;
+    height: 250px;
+    overflow: hidden;
+  }
+
+  .product-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+
+  .product-card:hover .product-image img {
+    transform: scale(1.05);
+  }
+
+  .product-info {
+    padding: 1.5rem;
+  }
+
+  .product-name {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+    color: #4E4E4E;
+    font-weight: 600;
+  }
+
+  .product-description {
+    color: #666;
+    margin-bottom: 1rem;
+    line-height: 1.5;
+    font-size: 0.9rem;
+  }
+
+  .product-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+
+  .product-price {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #A95A70;
+  }
+
+  .product-category {
+    background: #f0f0f0;
+    padding: 0.25rem 0.75rem;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    color: #666;
+  }
+
+  .add-to-cart-btn {
+    width: 100%;
+    padding: 0.75rem;
+    background: #A95A70;
+    color: #FFFBF5;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.3s ease;
+  }
+
+  .add-to-cart-btn:hover {
+    background: #B84C22;
+  }
+
+  /* Filter functionality */
+  .product-card.hidden {
+    display: none;
+  }
+
+  @media (max-width: 768px) {
+    .products-container {
+      padding: 1rem;
+    }
+
+    .products-title {
+      font-size: 2rem;
+    }
+
+    .products-grid {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    .filters {
+      gap: 0.5rem;
+    }
+
+    .filter-btn {
+      padding: 0.4rem 0.8rem;
+      font-size: 0.9rem;
+    }
+  }
+</style>
+
+<script>
+  // Filter functionality
+  document.addEventListener('DOMContentLoaded', function() {
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const productCards = document.querySelectorAll('.product-card');
+    const buyButtons = document.querySelectorAll('.add-to-cart-btn');
+
+    // Filter functionality
+    filterButtons.forEach(button => {
+      button.addEventListener('click', function(this: HTMLButtonElement) {
+        const category = this.getAttribute('data-category');
+        
+        // Update active button
+        filterButtons.forEach(btn => btn.classList.remove('active'));
+        this.classList.add('active');
+        
+        // Filter products
+        productCards.forEach(card => {
+          if (category === 'all' || card.getAttribute('data-category') === category) {
+            card.classList.remove('hidden');
+          } else {
+            card.classList.add('hidden');
+          }
+        });
+      });
+    });
+
+    // Stripe checkout functionality
+    buyButtons.forEach(button => {
+      button.addEventListener('click', async function(this: HTMLButtonElement) {
+        const priceId = this.getAttribute('data-price-id');
+        if (!priceId) {
+          console.error('No price ID found for this product');
+          return;
+        }
+
+        // Show loading state
+        const originalText = this.textContent;
+        this.textContent = 'Processing...';
+        this.disabled = true;
+
+        try {
+          // Create checkout session
+          const response = await fetch('/api/create-checkout-session', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              priceId: priceId,
+              successUrl: `${window.location.origin}/success`,
+              cancelUrl: `${window.location.origin}/products`,
+            }),
+          });
+
+          const { url } = await response.json();
+          
+          if (url) {
+            // Redirect to Stripe Checkout
+            window.location.href = url;
+          } else {
+            throw new Error('No checkout URL received');
+          }
+        } catch (error) {
+          console.error('Error creating checkout session:', error);
+          alert('Sorry, there was an error processing your order. Please try again.');
+          
+          // Reset button state
+          this.textContent = originalText;
+          this.disabled = false;
+        }
+      });
+    });
+  });
+</script>

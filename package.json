@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "astro": "^5.13.2",
+    "stripe": "^18.5.0",
     "typed.js": "^2.1.0"
   },
   "devDependencies": {

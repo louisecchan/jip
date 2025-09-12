@@ -8,7 +8,7 @@ import "../styles/css.css";
 const title = "Home | fieur handcrafted candles";
 const description = "Experience Fieur Candles, where nature's beauty meets good intentions. Our thoughtfully crafted candles enhance every moment, from serene mornings to cozy evenings, using ingredients to illuminate your space and create a warm, homey atmosphere.";
 const canonicalUrl = "https://www.fieur-candles.com/";
-const ogImage = "https://fieur.bigcartel.com/";
+const ogImage = "https://res.cloudinary.com/dlmgs0z2s/image/upload/v1757705171/fieur-og-image_onlvjd.png/";
 const themeColors = {
   buttonTextColor: "#FFFBF5",
   buttonHoverBackgroundColor: "#B84C22",
@@ -17,23 +17,6 @@ const themeColors = {
   linkHoverColor: "#B77F92",
   primaryTextColor: "#4E4E4E",
   buttonBackgroundColor: "#A95A70"
-};
-const bigCartelConfig = {
-  accountId: 11531670,
-  host: "www.fieur-candles.com",
-  bcHost: "fieur.bigcartel.com",
-  currency: "HKD",
-  country: { code: "HK", name: "Hong Kong" },
-  theme: {
-    name: "Cosmos",
-    version: "1.3.0",
-    colors: themeColors
-  },
-  checkout: {
-    paymentsEnabled: true,
-    stripePublishableKey: "pk_live_51JVEUHEa8NUCDJ7bG2sV84hCT7g6fPrJEZ4EVgZOXS62FhcdtqNUsT12SxgATMpaF1h6he9dgdWTQ0Mtk3HynkE000XrZjdnkg"
-  },
-  page: { type: "home" }
 };
 ---
 
@@ -45,12 +28,6 @@ const bigCartelConfig = {
     <title>{title}</title>
     <meta name="description" content={description} />
         
-    <!-- Big Cartel generated meta tags -->
-    <meta name="generator" content="Big Cartel" />
-    <meta name="author" content="fieur" />
-    <meta name="referrer" content="strict-origin-when-cross-origin" />
-    <meta name="theme_name" content="Cosmos" />
-    <meta name="theme_version" content="1.3.0" />
     
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
@@ -65,9 +42,7 @@ const bigCartelConfig = {
     <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="true" />
 
     <!-- Favicons -->
-    <link rel="icon" href="https://fieur.bigcartel.com/favicon.svg" type="image/svg+xml" />
-    <link rel="icon" href="https://fieur.bigcartel.com/favicon.ico" type="image/x-icon" />
-    <link rel="apple-touch-icon" href="https://fieur.bigcartel.com/apple-touch-icon.png" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     
     <!-- Structured Data -->
     <script type="application/ld+json" set:html={JSON.stringify({
@@ -109,14 +84,6 @@ const bigCartelConfig = {
       }
     ])}></script>
     
-    <!-- Big Cartel Configuration -->
-    <script set:html={`
-      window.bigcartel = window.bigcartel || {};
-      window.bigcartel = {
-        ...window.bigcartel,
-        ...${JSON.stringify(bigCartelConfig)}
-      };
-    `}></script>
     
     <!-- External Scripts -->
     <script id="stripe-js" src="../scripts/Untitled.js" async></script>
@@ -127,7 +94,7 @@ const bigCartelConfig = {
   
   <body id="home" class="theme">
     <!-- Main Tagline with Smooth Transition -->
-    <a href="./products.html" class="tagline-redirect" id="smooth-transition">
+    <a href="/products" class="tagline-redirect" id="smooth-transition">
       <span id="tagline" class="special-elite-regular">light and see.</span>
       <span class="typed-cursor typed-cursor--blink" aria-hidden="true">|</span>
     </a>
