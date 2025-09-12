@@ -9,6 +9,10 @@
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^5.13.2"
+    "astro": "^5.13.2",
+    "typed.js": "^2.1.0"
+  },
+  "devDependencies": {
+    "@rollup/rollup-darwin-arm64": "^4.50.1"
   }
 }
