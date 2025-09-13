@@ -1,0 +1,151 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout>
+  <div class="about-container">
+    <div class="about-hero">
+      <h1 class="about-title">About Fieur Candles</h1>
+      <p class="about-subtitle">Crafting moments of tranquility and warmth</p>
+    </div>
+
+    <div class="about-content">
+      <div class="about-section">
+        <h2>Our Story</h2>
+        <p>
+          Founded with a passion for creating beautiful, handcrafted candles, Fieur Candles has been 
+          dedicated to bringing warmth and ambiance to homes around the world. Each candle is carefully 
+          crafted using the finest materials and traditional techniques passed down through generations.
+        </p>
+      </div>
+
+      <div class="about-section">
+        <h2>Our Mission</h2>
+        <p>
+          We believe that every moment deserves to be special. Our candles are designed to transform 
+          ordinary spaces into extraordinary experiences, creating the perfect atmosphere for relaxation, 
+          celebration, or quiet reflection.
+        </p>
+      </div>
+
+      <div class="about-section">
+        <h2>Quality & Craftsmanship</h2>
+        <p>
+          Every Fieur candle is made with premium soy wax, cotton wicks, and carefully selected 
+          fragrances. We use only natural, sustainable ingredients to ensure our candles burn cleanly 
+          and evenly, providing you with hours of beautiful light and delightful aromas.
+        </p>
+      </div>
+
+      <div class="about-section">
+        <h2>Our Values</h2>
+        <ul class="values-list">
+          <li>Sustainability - Using eco-friendly materials and processes</li>
+          <li>Quality - Never compromising on the finest ingredients</li>
+          <li>Authenticity - Each candle tells a story of craftsmanship</li>
+          <li>Community - Supporting local artisans and suppliers</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .about-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+    min-height: calc(100vh - 100px);
+  }
+
+  .about-hero {
+    text-align: center;
+    margin-bottom: 4rem;
+    padding: 3rem 0;
+  }
+
+  .about-title {
+    font-family: "Cormorant", serif;
+    font-size: 3rem;
+    font-weight: 700;
+    color: #4E4E4E;
+    margin-bottom: 1rem;
+  }
+
+  .about-subtitle {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 1.2rem;
+    color: #B77F92;
+    font-style: italic;
+  }
+
+  .about-content {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+  }
+
+  .about-section h2 {
+    font-family: "Cormorant", serif;
+    font-size: 2rem;
+    font-weight: 600;
+    color: #4E4E4E;
+    margin-bottom: 1.5rem;
+    border-bottom: 2px solid #B77F92;
+    padding-bottom: 0.5rem;
+  }
+
+  .about-section p {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #4E4E4E;
+    margin-bottom: 1rem;
+  }
+
+  .values-list {
+    list-style: none;
+    padding: 0;
+  }
+
+  .values-list li {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #4E4E4E;
+    margin-bottom: 1rem;
+    padding-left: 2rem;
+    position: relative;
+  }
+
+  .values-list li::before {
+    content: "✦";
+    position: absolute;
+    left: 0;
+    color: #B77F92;
+    font-weight: bold;
+  }
+
+  @media (max-width: 768px) {
+    .about-container {
+      padding: 1rem;
+    }
+
+    .about-title {
+      font-size: 2.5rem;
+    }
+
+    .about-subtitle {
+      font-size: 1rem;
+    }
+
+    .about-section h2 {
+      font-size: 1.5rem;
+    }
+
+    .about-section p,
+    .values-list li {
+      font-size: 1rem;
+    }
+  }
+</style>

@@ -1,0 +1,99 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout>
+  <div class="success-container">
+    <div class="success-content">
+      <div class="success-icon">✓</div>
+      <h1>Payment Successful!</h1>
+      <p>Thank you for your purchase. You will receive a confirmation email shortly.</p>
+      <div class="success-actions">
+        <a href="/products" class="btn btn-primary">Continue Shopping</a>
+        <a href="/" class="btn btn-secondary">Return Home</a>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .success-container {
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+  }
+
+  .success-content {
+    text-align: center;
+    max-width: 500px;
+    background: var(--background-color);
+    padding: 3rem;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  }
+
+  .success-icon {
+    font-size: 4rem;
+    color: #4CAF50;
+    margin-bottom: 1rem;
+  }
+
+  h1 {
+    color: #4E4E4E;
+    margin-bottom: 1rem;
+    font-family: Arial, Helvetica, sans-serif
+  }
+
+  p {
+    color: #666;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+  }
+
+  .success-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+  }
+
+  .btn-primary {
+    background: #A95A70;
+    color: #FFFBF5;
+  }
+
+  .btn-primary:hover {
+    background: #B84C22;
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: #A95A70;
+    border: 2px solid #A95A70;
+  }
+
+  .btn-secondary:hover {
+    background: #A95A70;
+    color: #FFFBF5;
+  }
+
+  @media (max-width: 768px) {
+    .success-content {
+      padding: 2rem;
+    }
+
+    .success-actions {
+      flex-direction: column;
+    }
+  }
+</style>

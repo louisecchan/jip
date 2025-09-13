@@ -1,0 +1,305 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout>
+  <div class="contact-container">
+    <div class="contact-hero">
+      <h1 class="contact-title">Get in Touch</h1>
+      <p class="contact-subtitle">We'd love to hear from you</p>
+    </div>
+
+    <div class="contact-content">
+      <div class="contact-info">
+        <h2>Contact Information</h2>
+        <div class="contact-details">
+          <div class="contact-item">
+            <h3>Email</h3>
+            <p>hello@fieucandles.com</p>
+          </div>
+          <div class="contact-item">
+            <h3>Phone</h3>
+            <p>+1 (555) 123-4567</p>
+          </div>
+          <div class="contact-item">
+            <h3>Address</h3>
+            <p>
+              123 Candle Street<br>
+              Aromaville, AV 12345<br>
+              United States
+            </p>
+          </div>
+          <div class="contact-item">
+            <h3>Business Hours</h3>
+            <p>
+              Monday - Friday: 9:00 AM - 6:00 PM<br>
+              Saturday: 10:00 AM - 4:00 PM<br>
+              Sunday: Closed
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-form-container">
+        <h2>Send us a Message</h2>
+        <form class="contact-form" id="contactForm">
+          <div class="form-group">
+            <label for="name">Name *</label>
+            <input type="text" id="name" name="name" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="email">Email *</label>
+            <input type="email" id="email" name="email" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="subject">Subject</label>
+            <input type="text" id="subject" name="subject">
+          </div>
+          
+          <div class="form-group">
+            <label for="message">Message *</label>
+            <textarea id="message" name="message" rows="5" required></textarea>
+          </div>
+          
+          <button type="submit" class="submit-btn">Send Message</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="faq-section">
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-item">
+        <h3>How long do your candles burn?</h3>
+        <p>Our candles typically burn for 40-50 hours, depending on the size and how they're used. Always trim the wick to 1/4 inch before each use for optimal burning.</p>
+      </div>
+      <div class="faq-item">
+        <h3>Are your candles eco-friendly?</h3>
+        <p>Yes! We use 100% soy wax, cotton wicks, and recyclable packaging. All our ingredients are natural and sustainable.</p>
+      </div>
+      <div class="faq-item">
+        <h3>Do you offer international shipping?</h3>
+        <p>Currently, we ship within the United States. We're working on expanding our shipping options internationally.</p>
+      </div>
+      <div class="faq-item">
+        <h3>Can I customize a candle order?</h3>
+        <p>Absolutely! We love creating custom candles for special occasions. Contact us with your requirements and we'll work with you to create something special.</p>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .contact-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 2rem;
+    min-height: calc(100vh - 100px);
+  }
+
+  .contact-hero {
+    text-align: center;
+    margin-bottom: 4rem;
+    padding: 3rem 0;
+  }
+
+  .contact-title {
+    font-family: "Cormorant", serif;
+    font-size: 3rem;
+    font-weight: 700;
+    color: #4E4E4E;
+    margin-bottom: 1rem;
+  }
+
+  .contact-subtitle {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 1.2rem;
+    color: #B77F92;
+    font-style: italic;
+  }
+
+  .contact-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    margin-bottom: 4rem;
+  }
+
+  .contact-info h2,
+  .contact-form-container h2 {
+    font-family: "Cormorant", serif;
+    font-size: 2rem;
+    font-weight: 600;
+    color: #4E4E4E;
+    margin-bottom: 2rem;
+    border-bottom: 2px solid #B77F92;
+    padding-bottom: 0.5rem;
+  }
+
+  .contact-details {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .contact-item h3 {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #B77F92;
+    margin-bottom: 0.5rem;
+  }
+
+  .contact-item p {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #4E4E4E;
+  }
+
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .form-group label {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #4E4E4E;
+    margin-bottom: 0.5rem;
+  }
+
+  .form-group input,
+  .form-group textarea {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 1rem;
+    padding: 0.75rem;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    transition: border-color 0.3s ease;
+    background: white;
+  }
+
+  .form-group input:focus,
+  .form-group textarea:focus {
+    outline: none;
+    border-color: #B77F92;
+  }
+
+  .submit-btn {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+    color: white;
+    background: #B77F92;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    align-self: flex-start;
+  }
+
+  .submit-btn:hover {
+    background: #a06b7a;
+  }
+
+  .faq-section {
+    margin-top: 4rem;
+    padding-top: 3rem;
+    border-top: 1px solid #e0e0e0;
+  }
+
+  .faq-section h2 {
+    font-family: "Cormorant", serif;
+    font-size: 2rem;
+    font-weight: 600;
+    color: #4E4E4E;
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+
+  .faq-item {
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background: #f9f9f9;
+    border-radius: 8px;
+  }
+
+  .faq-item h3 {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #B77F92;
+    margin-bottom: 1rem;
+  }
+
+  .faq-item p {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #4E4E4E;
+  }
+
+  @media (max-width: 768px) {
+    .contact-container {
+      padding: 1rem;
+    }
+
+    .contact-content {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .contact-title {
+      font-size: 2.5rem;
+    }
+
+    .contact-subtitle {
+      font-size: 1rem;
+    }
+
+    .contact-info h2,
+    .contact-form-container h2,
+    .faq-section h2 {
+      font-size: 1.5rem;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const contactForm = document.getElementById('contactForm') as HTMLFormElement;
+    
+    if (contactForm) {
+      contactForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Get form data
+        const formData = new FormData(contactForm);
+        const name = formData.get('name');
+        const email = formData.get('email');
+        const subject = formData.get('subject');
+        const message = formData.get('message');
+        
+        // Simple validation
+        if (!name || !email || !message) {
+          alert('Please fill in all required fields.');
+          return;
+        }
+        
+        // Simulate form submission
+        alert('Thank you for your message! We\'ll get back to you soon.');
+        contactForm.reset();
+      });
+    }
+  });
+</script>

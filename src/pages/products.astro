@@ -1,0 +1,16 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ProductsComponent from '../components/Products.astro';
+import { getStripeProducts } from '../lib/stripe';
+
+// Fetch products from Stripe
+const products = await getStripeProducts();
+---
+
+<Layout>
+  <ProductsComponent 
+    products={products}
+    title="Products"
+    showFilters={true}
+  />
+</Layout>
