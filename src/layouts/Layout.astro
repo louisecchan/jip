@@ -17,6 +17,9 @@ import Navigation from '../components/Navigation.astro';
 	</head>
 	<body>
 		<Navigation />
+		<header class="fieur-header">
+			<a href="/products" class="fieur-logo">fieur</a>
+		</header>
 		<slot />
 	</body>
 </html>
@@ -27,5 +30,37 @@ import Navigation from '../components/Navigation.astro';
 		margin: 0;
 		width: 100%;
 		height: 100%;
+	}
+
+	.fieur-header {
+		padding: 1rem 2rem;
+		text-align: center;
+		position: sticky;
+		top: 0;
+		z-index: 99;
+		color: #4E4E4E;
+	}
+
+	.fieur-logo {
+		font-family: "Cormorant", serif;
+		font-size: 60px;
+		font-weight: 700;
+		color: #4E4E4E;
+		text-decoration: none;
+		transition: color 0.3s ease-in-out;
+	}
+
+	.fieur-logo:hover {
+		color: #a06b7a;
+	}
+
+	@media (max-width: 768px) {
+		.fieur-header {
+			padding: 0.75rem 1rem;
+		}
+		
+		.fieur-logo {
+			font-size: 2rem;
+		}
 	}
 </style>

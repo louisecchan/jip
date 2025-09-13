@@ -31,7 +31,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem 2rem;
+    padding: 1.5rem 2rem;
   }
 
   .nav-logo a {
@@ -56,15 +56,18 @@
   .nav-link {
     font-family: 'Cormorant', sans-serif;
     font-size: 20px;
-    font-weight: 400;
+    font-weight: 600;
     color: #4E4E4E;
     text-decoration: none;
     transition: color 0.3s ease;
     position: relative;
+    line-height: 20px;
+    border-bottom: 2px solid transparent;
   }
 
   .nav-link:hover {
     color: #B77F92;
+    text-underline-offset: 3px;
   }
 
   .nav-link::after {
