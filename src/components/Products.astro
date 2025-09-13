@@ -6,7 +6,7 @@ export interface Props {
     price: number;
     image: string;
     description: string;
-    category: string;
+    categories: string[];
     stripePriceId: string;
   }>;
   title: string;
@@ -16,7 +16,7 @@ export interface Props {
 const { products, title, showFilters = false } = Astro.props;
 
 // Get unique categories for filtering
-const categories = [...new Set(products.map(product => product.category))];
+const categories = [...new Set(products.flatMap(product => product.categories))];
 ---
 
 <div class="products-container">
@@ -33,7 +33,7 @@ const categories = [...new Set(products.map(product => product.category))];
   
   <div class="product-list">
     {products.map(product => (
-      <div class="product-card" data-category={product.category.toLowerCase()}>
+      <div class="product-card" data-categories={product.categories.map(cat => cat.toLowerCase()).join('|')}>
         <div class="product-image">
           <img src={product.image} alt={product.name} />
         </div>
@@ -239,10 +239,15 @@ const categories = [...new Set(products.map(product => product.category))];
         
         // Filter products
         productCards.forEach(card => {
-          if (category === 'all' || card.getAttribute('data-category') === category) {
+          if (category === 'all') {
             card.classList.remove('hidden');
-          } else {
-            card.classList.add('hidden');
+          } else if (category) {
+            const cardCategories = (card.getAttribute('data-categories') || '').split('|');
+            if (cardCategories.includes(category)) {
+              card.classList.remove('hidden');
+            } else {
+              card.classList.add('hidden');
+            }
           }
         });
       });
