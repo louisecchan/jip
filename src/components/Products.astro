@@ -31,7 +31,7 @@ const categories = [...new Set(products.map(product => product.category))];
     </div>
   )}
   
-  <div class="products-grid">
+  <div class="product-list">
     {products.map(product => (
       <div class="product-card" data-category={product.category.toLowerCase()}>
         <div class="product-image">
@@ -39,14 +39,9 @@ const categories = [...new Set(products.map(product => product.category))];
         </div>
         <div class="product-info">
           <h3 class="product-name">{product.name}</h3>
-          <p class="product-description">{product.description}</p>
           <div class="product-footer">
-            <span class="product-price">${product.price.toFixed(2)}</span>
-            <span class="product-category">{product.category}</span>
+            <span class="product-price" data-product-id={product.id}>${product.price.toFixed(2)}</span>
           </div>
-          <button class="add-to-cart-btn" data-price-id={product.stripePriceId}>
-            Buy Now
-          </button>
         </div>
       </div>
     ))}
@@ -85,6 +80,11 @@ const categories = [...new Set(products.map(product => product.category))];
     font-weight: 400;
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 16px;
+    color: #4E4E4E
+  }
+
+  .filter-btn:hover {
+    text-decoration: underline;
   }
 
   .filter-btn:hover,
@@ -92,19 +92,29 @@ const categories = [...new Set(products.map(product => product.category))];
     color: #B77F92;
   }
 
-  .products-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
+  .product-list {
+    --gap: calc(var(--spacing-unit) * 3);
+    --row-gap: 32px;
+    --columns: 3;
+    --spacing-unit: 8px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    margin: var(--spacing-unit) 0 0;
+    gap: var(--gap);
+    row-gap: var(--row-gap);
+    margin-top: 36px;
   }
 
   .product-card {
-    background: #FFFBF5;
+    background: var(--background-color);
     border-radius: 15px;
     overflow: hidden;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     border: 1px solid #f0f0f0;
+    flex: 0 0 calc(33.333% - var(--gap));
+    min-width: 300px;
   }
 
   .product-card:hover {
@@ -134,58 +144,43 @@ const categories = [...new Set(products.map(product => product.category))];
   }
 
   .product-name {
-    font-size: 1.25rem;
     margin-bottom: 0.5rem;
     color: #4E4E4E;
     font-weight: 600;
-    font-family: "Helvetica", sans-serif;
+    font-family: "Helvetica Neue", sans-serif;
+    text-align: center;
+	  word-break: break-word;
+	  font-size: 1rem;
+	  font-weight: 700;
   }
 
-  .product-description {
-    color: #666;
-    margin-bottom: 1rem;
-    line-height: 1.5;
-    font-size: 0.9rem;
-    font-family: "Helvetica", sans-serif;
-  }
 
   .product-footer {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     margin-bottom: 1rem;
   }
 
   .product-price {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #A95A70;
-  }
-
-  .product-category {
-    background: #f0f0f0;
-    padding: 0.25rem 0.75rem;
-    border-radius: 15px;
-    font-size: 0.8rem;
-    color: #666;
-    font-family: "Helvetica", sans-serif;
-  }
-
-  .add-to-cart-btn {
-    width: 100%;
-    padding: 0.75rem;
-    background: #A95A70;
-    color: #FFFBF5;
-    border: none;
-    border-radius: 8px;
+    color: #4E4E4E;
+    font-family: "Helvetica Neue", sans-serif;
+    text-align: center;
+	  font-size: 1rem;
+	  font-weight: 400;
     cursor: pointer;
-    font-weight: 600;
-    transition: background 0.3s ease;
+    transition: color 0.3s ease, text-decoration 0.3s ease;
   }
 
-  .add-to-cart-btn:hover {
-    background: #B84C22;
+  .product-price:hover {
+    color: #B77F92;
   }
+
+  .product-name.price-hover {
+    color: #B77F92;
+  }
+
+
 
   /* Filter functionality */
   .product-card.hidden {
@@ -201,9 +196,14 @@ const categories = [...new Set(products.map(product => product.category))];
       font-size: 2rem;
     }
 
-    .products-grid {
-      grid-template-columns: 1fr;
+    .product-list {
+      flex-direction: column;
       gap: 1.5rem;
+    }
+
+    .product-card {
+      flex: 1 1 100%;
+      min-width: unset;
     }
 
     .filters {
@@ -222,7 +222,7 @@ const categories = [...new Set(products.map(product => product.category))];
   document.addEventListener('DOMContentLoaded', function() {
     const filterButtons = document.querySelectorAll('.filter-btn');
     const productCards = document.querySelectorAll('.product-card');
-    const buyButtons = document.querySelectorAll('.add-to-cart-btn');
+    const productPrices = document.querySelectorAll('.product-price');
 
     // Filter functionality
     filterButtons.forEach(button => {
@@ -244,51 +244,31 @@ const categories = [...new Set(products.map(product => product.category))];
       });
     });
 
-    // Stripe checkout functionality
-    buyButtons.forEach(button => {
-      button.addEventListener('click', async function(this: HTMLButtonElement) {
-        const priceId = this.getAttribute('data-price-id');
-        if (!priceId) {
-          console.error('No price ID found for this product');
-          return;
-        }
-
-        // Show loading state
-        const originalText = this.textContent;
-        this.textContent = 'Processing...';
-        this.disabled = true;
-
-        try {
-          // Create checkout session
-          const response = await fetch('/api/create-checkout-session', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              priceId: priceId,
-              successUrl: `${window.location.origin}/success`,
-              cancelUrl: `${window.location.origin}/products`,
-            }),
-          });
-
-          const { url } = await response.json();
-          
-          if (url) {
-            // Redirect to Stripe Checkout
-            window.location.href = url;
-          } else {
-            throw new Error('No checkout URL received');
-          }
-        } catch (error) {
-          console.error('Error creating checkout session:', error);
-          alert('Sorry, there was an error processing your order. Please try again.');
-          
-          // Reset button state
-          this.textContent = originalText;
-          this.disabled = false;
+    // Product price click functionality
+    productPrices.forEach(price => {
+      price.addEventListener('click', function(this: HTMLSpanElement) {
+        const productId = this.getAttribute('data-product-id');
+        if (productId) {
+          window.location.href = `/product/${productId}`;
         }
       });
     });
+
+    // Product price hover functionality - change product name color
+    productPrices.forEach(price => {
+      const productCard = price.closest('.product-card');
+      const productName = productCard?.querySelector('.product-name');
+      
+      if (productName) {
+        price.addEventListener('mouseenter', function() {
+          productName.classList.add('price-hover');
+        });
+        
+        price.addEventListener('mouseleave', function() {
+          productName.classList.remove('price-hover');
+        });
+      }
+    });
+
   });
 </script>

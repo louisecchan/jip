@@ -1,3 +1,7 @@
+:root {
+  --background-color: #fffbf5;
+}
+
 iframe:hover {
   pointer-events: none; /* This will disable interaction with the iframe */
 }
@@ -761,6 +765,7 @@ div.pswp__img--placeholder,
 }
 
 body {
+  background-color: var(--background-color);
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
 }
@@ -812,7 +817,6 @@ ul {
 }
 
 :root {
-  --background-color: #fffbf5;
   --text-color: #4e4e4e;
   --link-text-color: #4e4e4e;
   --link-hover-color: #b77f92;
