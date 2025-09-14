@@ -273,26 +273,11 @@ if (!product) {
 </style>
 
 <script>
-  // Declare Stripe as a global variable
-  declare const Stripe: any;
-  
   document.addEventListener('DOMContentLoaded', function() {
-    // Initialize Stripe with environment variable
-    const stripePublishableKey = import.meta.env.PUBLIC_STRIPE_PUBLISHABLE_KEY;
-    
-    if (!stripePublishableKey) {
-      console.error('PUBLIC_STRIPE_PUBLISHABLE_KEY environment variable is not set');
-      console.error('Make sure you have PUBLIC_STRIPE_PUBLISHABLE_KEY in your .env file');
-      alert('Stripe configuration error. Please check your environment variables.');
-      return;
-    }
-    
-    const stripe = Stripe(stripePublishableKey);
-    
     const addToCartBtn = document.getElementById('add-to-cart');
 
-    // Add to cart functionality using client-side Stripe checkout
-    addToCartBtn?.addEventListener('click', async function(this: HTMLButtonElement) {
+    // Add to cart functionality
+    addToCartBtn?.addEventListener('click', function(this: HTMLButtonElement) {
       const priceId = this.getAttribute('data-price-id');
       
       console.log('Add to cart clicked, priceId:', priceId);
@@ -303,38 +288,31 @@ if (!product) {
         return;
       }
 
+      // Get product data from the page
+      const productName = document.querySelector('.product-title')?.textContent || 'Product';
+      const productPrice = parseFloat(document.querySelector('.product-price')?.textContent?.replace('$', '') || '0');
+      const productImage = document.querySelector('.main-image img')?.getAttribute('src') || '';
+
       // Show loading state
       const originalText = this.textContent;
       this.textContent = 'Adding to Cart...';
       this.disabled = true;
 
       try {
-        const successUrl = `${window.location.origin}/success`;
-        const cancelUrl = `${window.location.origin}/product`;
-
-        console.log('Creating checkout session with:', {
-          priceId,
-          successUrl,
-          cancelUrl
+        // Add item to cart
+        addItemToCart({
+          id: priceId,
+          name: productName,
+          price: productPrice,
+          image: productImage,
+          stripePriceId: priceId
         });
 
-        // Use Stripe's client-side checkout
-        const { error } = await stripe.redirectToCheckout({
-          lineItems: [{
-            price: priceId,
-            quantity: 1,
-          }],
-          mode: 'payment',
-          successUrl: successUrl,
-          cancelUrl: cancelUrl,
-        });
-
-        if (error) {
-          console.error('Stripe checkout error:', error);
-          throw new Error(error.message || 'Failed to create checkout session');
-        }
-
-        console.log('Checkout session created, redirecting...');
+        // Item added to cart successfully
+        
+        // Reset button state
+        this.textContent = originalText;
+        this.disabled = false;
         
       } catch (error) {
         console.error('Error adding to cart:', error);
@@ -347,4 +325,41 @@ if (!product) {
       }
     });
   });
+
+  // Function to add item to cart
+  function addItemToCart(item) {
+    if (typeof window === 'undefined') return;
+    
+    try {
+      // Get current cart
+      const cartData = localStorage.getItem('satellite_spectrum_cart');
+      let cart = cartData ? JSON.parse(cartData) : { items: [], total: 0, itemCount: 0 };
+      
+      // Check if item already exists
+      const existingItemIndex = cart.items.findIndex(cartItem => cartItem.id === item.id);
+      
+      if (existingItemIndex > -1) {
+        // Item exists, increment quantity
+        cart.items[existingItemIndex].quantity += 1;
+      } else {
+        // New item, add to cart
+        cart.items.push({ ...item, quantity: 1 });
+      }
+      
+      // Recalculate totals
+      cart.total = cart.items.reduce((sum, cartItem) => sum + (cartItem.price * cartItem.quantity), 0);
+      cart.itemCount = cart.items.reduce((sum, cartItem) => sum + cartItem.quantity, 0);
+      
+      // Save to localStorage
+      localStorage.setItem('satellite_spectrum_cart', JSON.stringify(cart));
+      
+      // Dispatch cart update event
+      window.dispatchEvent(new CustomEvent('cartUpdated', { detail: cart }));
+      
+    } catch (error) {
+      console.error('Error adding item to cart:', error);
+      throw error;
+    }
+  }
+
 </script>

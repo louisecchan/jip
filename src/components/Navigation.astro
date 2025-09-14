@@ -43,6 +43,18 @@
     padding: 1.5rem 2rem;
   }
 
+  /* Align cart icon with add to cart button on product pages */
+  .product-page .nav-container {
+    position: relative;
+  }
+
+  .product-page .nav-right {
+    position: absolute;
+    right: calc(50% - 1.5rem); /* Align with the right column of the product grid */
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
   .nav-logo a {
     font-family: "Cormorant", serif;
     font-size: 1.8rem;
@@ -154,6 +166,12 @@
       padding: 1rem;
     }
 
+    /* Reset cart alignment on mobile for product pages */
+    .product-page .nav-right {
+      position: static;
+      transform: none;
+    }
+
     .nav-menu {
       position: fixed;
       top: 70px;
@@ -237,5 +255,43 @@
         }
       });
     }
+
+    // Update cart count on page load
+    updateCartCount();
+
+    // Listen for cart updates
+    window.addEventListener('cartUpdated', updateCartCount);
   });
+
+  // Function to get cart item count from localStorage
+  function getCartItemCount() {
+    if (typeof window === 'undefined') return 0;
+    
+    try {
+      const cartData = localStorage.getItem('satellite_spectrum_cart');
+      if (!cartData) return 0;
+      
+      const cart = JSON.parse(cartData);
+      return cart.itemCount || 0;
+    } catch (error) {
+      console.error('Error getting cart count:', error);
+      return 0;
+    }
+  }
+
+  // Function to update cart count display
+  function updateCartCount() {
+    const cartCountElement = document.querySelector('.cart-count') as HTMLElement;
+    if (cartCountElement) {
+      const count = getCartItemCount();
+      cartCountElement.textContent = count.toString();
+      
+      // Show/hide cart count based on whether there are items
+      if (count > 0) {
+        cartCountElement.style.display = 'flex';
+      } else {
+        cartCountElement.style.display = 'none';
+      }
+    }
+  }
 </script>
