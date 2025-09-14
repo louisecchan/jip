@@ -1,0 +1,164 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout>
+  <div class="care-tips-container">
+    <div class="care-tips-hero fade-in">
+      <h1 class="care-tips-title">Care Tips</h1>
+      <p class="care-tips-subtitle">Essential guidance to help you get the most out of your Fieur candles and ensure they burn beautifully every time.</p>
+    </div>
+
+    <div class="care-tips-content fade-in-delayed">
+      <div class="care-tips-section">
+        <h2>First Burn</h2>
+        <p>
+          <strong>Allow the wax to melt across the entire surface</strong> during the first burn. This prevents tunneling and ensures even burning throughout the candle's life. Let it burn for 2-3 hours on the first use.
+        </p>
+      </div>
+
+      <div class="care-tips-section">
+        <h2>Trimming the Wick</h2>
+        <p>
+          <strong>Trim the wick to 1/4 inch</strong> before each burn. This prevents excessive smoking, sooting, and ensures a clean, even flame. Use a wick trimmer or small scissors for best results.
+        </p>
+      </div>
+
+      <div class="care-tips-section">
+        <h2>Burn Time</h2>
+        <p>
+          <strong>Don't burn for more than 4 hours at a time.</strong> This prevents overheating and maintains the candle's integrity. Allow the candle to cool completely before relighting.
+        </p>
+      </div>
+
+      <div class="care-tips-section">
+        <h2>Storage</h2>
+        <p>
+          <strong>Store in a cool, dry place</strong> away from direct sunlight. Keep the lid on when not in use to preserve the fragrance and protect from dust. Avoid extreme temperature changes.
+        </p>
+      </div>
+
+      <div class="care-tips-section">
+        <h2>Safety</h2>
+        <p>
+          <strong>Never leave burning candles unattended.</strong> Keep away from children, pets, and flammable materials. Place on a stable, heat-resistant surface and ensure proper ventilation in the room.
+        </p>
+      </div>
+
+      <div class="care-tips-section">
+        <h2>Extinguishing</h2>
+        <p>
+          <strong>Use a snuffer or gently blow out the flame.</strong> Avoid using water to extinguish as it can cause wax to splatter. Let the wax cool completely before moving the candle.
+        </p>
+      </div>
+
+      <div class="care-tips-section">
+        <h2>Cleaning</h2>
+        <p>
+          <strong>Clean the glass container</strong> after the candle is completely used. Remove any remaining wax with warm water and mild soap. The clean container can be repurposed or recycled.
+        </p>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .care-tips-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 2rem 2rem;
+    min-height: calc(100vh - 100px);
+  }
+
+  .fade-in {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 0.8s ease-out forwards;
+  }
+
+  .fade-in-delayed {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 0.8s ease-out 0.3s forwards;
+  }
+
+  @keyframes fadeInUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .care-tips-hero {
+    text-align: center;
+    margin-bottom: 4rem;
+    padding: 3rem 0;
+  }
+
+  .care-tips-title {
+    font-family: "Cormorant", serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #4E4E4E;
+    margin-bottom: 32px;
+  }
+
+  .care-tips-subtitle {
+    font-family: 'Special Elite', sans-serif;
+    font-size: 16px;
+    line-height: 24px;
+    color: #B77F92;
+  }
+
+  .care-tips-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+
+  .care-tips-section h2 {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 18px;
+    line-height: 24px;
+    font-weight: 600;
+    color: #4E4E4E;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #E5E5E5;
+  }
+
+  .care-tips-section p {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    line-height: 24px;
+    color: #4E4E4E;
+    margin-bottom: 0;
+  }
+
+  .care-tips-section strong {
+    color: #B77F92;
+    font-weight: 600;
+  }
+
+  @media (max-width: 768px) {
+    .care-tips-container {
+      padding: 1rem;
+    }
+
+    .care-tips-title {
+      font-size: 1.5rem;
+    }
+
+    .care-tips-subtitle {
+      font-size: 14px;
+    }
+
+    .care-tips-section h2 {
+      font-size: 16px;
+    }
+
+    .care-tips-section p {
+      font-size: 14px;
+    }
+  }
+</style>
