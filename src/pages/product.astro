@@ -1,0 +1,470 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getStripeProducts } from '../lib/stripe';
+
+// Get all products for the product list
+const products = await getStripeProducts();
+
+// For this boilerplate, we'll use the first product as an example
+// In a real implementation, you'd get the product ID from the URL params
+const product = products[0] || {
+  id: 'example-product',
+  name: 'Example Candle',
+  price: 29.99,
+  image: '/images/placeholder.jpg',
+  description: 'A beautiful example candle with a wonderful fragrance.',
+  categories: ['candles', 'home'],
+  stripePriceId: 'price_example'
+};
+---
+
+<Layout>
+  <div class="product-page">
+    <div class="product-container">
+      <!-- Product Image Section -->
+      <div class="product-image-section">
+        <div class="main-image">
+          <img src={product.image} alt={product.name} />
+        </div>
+        <!-- Additional product images could go here -->
+        <div class="image-thumbnails">
+          <div class="thumbnail active">
+            <img src={product.image} alt={product.name} />
+          </div>
+          <!-- Add more thumbnails as needed -->
+        </div>
+      </div>
+
+      <!-- Product Details Section -->
+      <div class="product-details">
+        <div class="product-header">
+          <h1 class="product-title">{product.name}</h1>
+          <div class="product-price">${product.price.toFixed(2)}</div>
+        </div>
+
+        <div class="product-description">
+          <p>{product.description}</p>
+        </div>
+
+        <div class="product-categories">
+          <span class="category-label">Categories:</span>
+          {product.categories.map(category => (
+            <span class="category-tag">{category}</span>
+          ))}
+        </div>
+
+        <!-- Add to Cart Button -->
+        <button class="add-to-cart-btn" id="add-to-cart" data-price-id={product.stripePriceId}>
+          Add to Cart
+        </button>
+      </div>
+    </div>
+
+    <!-- Related Products Section -->
+    <div class="related-products">
+      <h2>You might also like</h2>
+      <div class="related-products-grid">
+        {products.slice(0, 3).map(relatedProduct => (
+          <div class="related-product-card">
+            <img src={relatedProduct.image} alt={relatedProduct.name} />
+            <h4>{relatedProduct.name}</h4>
+            <p class="related-price">${relatedProduct.price.toFixed(2)}</p>
+            <a href={`/product/${relatedProduct.id}`} class="view-product-btn">View Product</a>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .product-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    font-family: "Cormorant", serif;
+  }
+
+  .product-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    margin-bottom: 4rem;
+  }
+
+  .product-image-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .main-image {
+    width: 100%;
+    height: 500px;
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  }
+
+  .main-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .image-thumbnails {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .thumbnail {
+    width: 80px;
+    height: 80px;
+    border-radius: 4px;
+    overflow: hidden;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: border-color 0.3s ease;
+  }
+
+  .thumbnail.active {
+    border-color: #a06b7a;
+  }
+
+  .thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .product-details {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .product-header {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+  }
+
+  .product-title {
+    font-family: "Special Elite", sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: hsl(0, 0%, 31%);
+    margin: 0 0 0.5rem;
+    line-height: 1.2;
+  }
+
+  .product-price {
+    font-family: "Helvetica Neue", sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    color: #a06b7a;
+  }
+
+  .product-description {
+    font-family: "Helvetica Neue", sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    color: #666;
+  }
+
+  .product-categories {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
+    font-family: "Helvetica Neue", sans-serif;
+  }
+
+  .category-label {
+    font-weight: 600;
+    color: #4E4E4E;
+  }
+
+  .category-tag {
+    background-color: #f5f5f5;
+    color: #666;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    text-transform: capitalize;
+  }
+
+  .add-to-cart-btn {
+    width: 100%;
+    padding: 1rem 2rem;
+    background-color: #a06b7a;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-family: "Helvetica Neue", sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    margin-bottom: 1rem;
+  }
+
+  .add-to-cart-btn:hover {
+    background-color: #8a5a68;
+  }
+
+  .add-to-cart-btn:active {
+    transform: translateY(0);
+  }
+
+
+
+
+
+  .product-features,
+  .shipping-info {
+    padding: 1.5rem 0;
+    border-top: 1px solid #e0e0e0;
+  }
+
+  .product-features h3,
+  .shipping-info h3 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #4E4E4E;
+    margin-bottom: 1rem;
+  }
+
+  .product-features ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .product-features li {
+    padding: 0.5rem 0;
+    color: #666;
+    position: relative;
+    padding-left: 1.5rem;
+  }
+
+  .product-features li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: #a06b7a;
+    font-weight: bold;
+  }
+
+  .shipping-info p {
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 0.5rem;
+  }
+
+  .related-products {
+    margin-top: 4rem;
+    padding-top: 2rem;
+    border-top: 1px solid #e0e0e0;
+  }
+
+  .related-products h2 {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #4E4E4E;
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+
+  .related-products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+  }
+
+  .related-product-card {
+    text-align: center;
+    padding: 1rem;
+    border-radius: 8px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .related-product-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  }
+
+  .related-product-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+  }
+
+  .related-product-card h4 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #4E4E4E;
+    margin-bottom: 0.5rem;
+  }
+
+  .related-price {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #a06b7a;
+    margin-bottom: 1rem;
+  }
+
+  .view-product-btn {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    background-color: transparent;
+    color: #a06b7a;
+    border: 2px solid #a06b7a;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+  }
+
+  .view-product-btn:hover {
+    background-color: #a06b7a;
+    color: white;
+  }
+
+  /* Mobile Responsiveness */
+  @media (max-width: 768px) {
+    .product-page {
+      padding: 1rem;
+    }
+
+    .product-container {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .product-title {
+      font-size: 2rem;
+    }
+
+    .product-price {
+      font-size: 1.5rem;
+    }
+
+    .main-image {
+      height: 300px;
+    }
+
+    .related-products-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const addToCartBtn = document.getElementById('add-to-cart');
+
+    // Add to cart functionality
+    addToCartBtn?.addEventListener('click', async function(this: HTMLButtonElement) {
+      const priceId = this.getAttribute('data-price-id');
+      
+      if (!priceId) {
+        alert('Product not available for purchase');
+        return;
+      }
+
+      // Show loading state
+      this.textContent = 'Adding to Cart...';
+      this.disabled = true;
+
+      try {
+        const response = await fetch('/api/create-checkout-session', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            priceId: priceId,
+            successUrl: `${window.location.origin}/success`,
+            cancelUrl: `${window.location.origin}/product`,
+            quantity: 1
+          }),
+        });
+
+        const data = await response.json();
+
+        if (data.url) {
+          // Redirect to Stripe checkout
+          window.location.href = data.url;
+        } else {
+          throw new Error(data.error || 'Failed to create checkout session');
+        }
+      } catch (error) {
+        console.error('Error adding to cart:', error);
+        alert('Failed to add to cart. Please try again.');
+        
+        // Reset button state
+        this.textContent = 'Add to Cart';
+        this.disabled = false;
+      }
+    });
+
+    // Image thumbnail functionality
+    const thumbnails = document.querySelectorAll('.thumbnail');
+    const mainImage = document.querySelector('.main-image img') as HTMLImageElement;
+
+    thumbnails.forEach(thumbnail => {
+      thumbnail.addEventListener('click', function(this: HTMLElement) {
+        // Remove active class from all thumbnails
+        thumbnails.forEach(t => t.classList.remove('active'));
+        // Add active class to clicked thumbnail
+        this.classList.add('active');
+        
+        // Update main image (if you have multiple images)
+        const thumbnailImg = this.querySelector('img') as HTMLImageElement;
+        if (thumbnailImg && mainImage) {
+          mainImage.src = thumbnailImg.src;
+        }
+      });
+    });
+
+    // Simple notification function
+    function showNotification(message: string, type: string = 'info') {
+      // Create notification element
+      const notification = document.createElement('div');
+      notification.className = `notification notification-${type}`;
+      notification.textContent = message;
+      notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background-color: ${type === 'success' ? '#4CAF50' : '#2196F3'};
+        color: white;
+        padding: 1rem 1.5rem;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        z-index: 1000;
+        font-weight: 500;
+        transform: translateX(100%);
+        transition: transform 0.3s ease;
+      `;
+      
+      document.body.appendChild(notification);
+      
+      // Animate in
+      setTimeout(() => {
+        notification.style.transform = 'translateX(0)';
+      }, 100);
+      
+      // Remove after 3 seconds
+      setTimeout(() => {
+        notification.style.transform = 'translateX(100%)';
+        setTimeout(() => {
+          document.body.removeChild(notification);
+        }, 300);
+      }, 3000);
+    }
+  });
+</script>
