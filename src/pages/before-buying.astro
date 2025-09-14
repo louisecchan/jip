@@ -1,0 +1,337 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout>
+  <div class="before-buying-container">
+    <div class="before-buying-hero fade-in">
+      <h1 class="before-buying-title">Before Buying</h1>
+      <p class="before-buying-subtitle">(you may want to know)</p>
+    </div>
+
+    <div class="before-buying-content fade-in-delayed">
+      <div class="info-section">
+        <div class="info-grid">
+          <div class="info-card">
+            <h3>Materials</h3>
+            <p>Natural soy wax mixed with beeswax</p>
+            <p><br>100% cotton thread</p>
+            <p><br>Fine fragrance oils and pure essential oils from the U.S.</p>
+          </div>
+          <div class="info-card">
+            <h3>Burn Time</h3>
+            <p>Each candle provides approximately 40-50 hours of burn time, depending on the size and fragrance.</p>
+          </div>
+          <div class="info-card">
+            <h3>Handcrafted With Care</h3>
+            <p>Measurements/color/flower placement may vary slightly.</p>
+            <p><br>It takes 3 to 7 days to craft your order.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .before-buying-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 2rem 2rem;
+    min-height: calc(100vh - 100px);
+  }
+
+  .fade-in {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 0.8s ease-out forwards;
+  }
+
+  .fade-in-delayed {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 0.8s ease-out 0.3s forwards;
+  }
+
+  @keyframes fadeInUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .before-buying-hero {
+    text-align: center;
+    margin-bottom: 4rem;
+    padding: 3rem 0;
+  }
+
+  .before-buying-title {
+    font-family: "Cormorant", serif;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #4E4E4E;
+    margin-bottom: 1rem;
+  }
+
+  .before-buying-subtitle {
+    font-family: 'Special Elite', sans-serif;
+    font-size: 18px;
+    line-height: 28px;
+    color: #B77F92;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .before-buying-content {
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+  }
+
+  .info-section h2 {
+    font-family: "Cormorant", serif;
+    font-size: 2rem;
+    font-weight: 600;
+    color: #4E4E4E;
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+
+  .info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .info-card {
+    background: #fafafa;
+    padding: 2rem;
+    border-radius: 8px;
+    border-left: 4px solid #B77F92;
+  }
+
+  .info-card h3 {
+    font-family: "Cormorant", serif;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #4E4E4E;
+    margin-bottom: 1rem;
+  }
+
+  .info-card p {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    line-height: 24px;
+    color: #4E4E4E;
+    margin: 0;
+  }
+
+  .care-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .care-item {
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+  }
+
+  .care-number {
+    background: #B77F92;
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "Cormorant", serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+    flex-shrink: 0;
+  }
+
+  .care-content h4 {
+    font-family: "Cormorant", serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #4E4E4E;
+    margin-bottom: 0.5rem;
+  }
+
+  .care-content p {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    line-height: 24px;
+    color: #4E4E4E;
+    margin: 0;
+  }
+
+  .shipping-info {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+  }
+
+  .shipping-card {
+    background: #fafafa;
+    padding: 2rem;
+    border-radius: 8px;
+    border-left: 4px solid #B77F92;
+  }
+
+  .shipping-card h3 {
+    font-family: "Cormorant", serif;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #4E4E4E;
+    margin-bottom: 1rem;
+  }
+
+  .shipping-card ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .shipping-card li {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    line-height: 24px;
+    color: #4E4E4E;
+    margin-bottom: 0.5rem;
+    padding-left: 1.5rem;
+    position: relative;
+  }
+
+  .shipping-card li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: #B77F92;
+    font-weight: bold;
+  }
+
+  .faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .faq-item {
+    background: #fafafa;
+    padding: 1.5rem;
+    border-radius: 8px;
+    border-left: 4px solid #B77F92;
+  }
+
+  .faq-item h4 {
+    font-family: "Cormorant", serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #4E4E4E;
+    margin-bottom: 0.5rem;
+  }
+
+  .faq-item p {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    line-height: 24px;
+    color: #4E4E4E;
+    margin: 0;
+  }
+
+  .cta-section {
+    text-align: center;
+    background: linear-gradient(135deg, #f8f8f8 0%, #f0f0f0 100%);
+    padding: 3rem 2rem;
+    border-radius: 12px;
+    margin-top: 2rem;
+  }
+
+  .cta-section h2 {
+    font-family: "Cormorant", serif;
+    font-size: 2rem;
+    font-weight: 600;
+    color: #4E4E4E;
+    margin-bottom: 1rem;
+  }
+
+  .cta-section p {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    line-height: 24px;
+    color: #4E4E4E;
+    margin-bottom: 2rem;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .cta-button {
+    display: inline-block;
+    background: #B77F92;
+    color: white;
+    padding: 1rem 2rem;
+    border-radius: 6px;
+    text-decoration: none;
+    font-family: "Cormorant", serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border: 2px solid #B77F92;
+  }
+
+  .cta-button:hover {
+    background: transparent;
+    color: #B77F92;
+    transform: translateY(-2px);
+  }
+
+  @media (max-width: 768px) {
+    .before-buying-container {
+      padding: 1rem;
+    }
+
+    .before-buying-title {
+      font-size: 2rem;
+    }
+
+    .before-buying-subtitle {
+      font-size: 16px;
+    }
+
+    .info-section h2 {
+      font-size: 1.5rem;
+    }
+
+    .info-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .care-item {
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .care-number {
+      align-self: flex-start;
+    }
+
+    .shipping-info {
+      grid-template-columns: 1fr;
+    }
+
+    .cta-section {
+      padding: 2rem 1rem;
+    }
+
+    .cta-section h2 {
+      font-size: 1.5rem;
+    }
+  }
+</style>

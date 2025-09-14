@@ -1,0 +1,73 @@
+---
+// Footer component with navigation links
+---
+
+<footer class="footer">
+  <div class="footer-container">
+    <nav class="footer-nav">
+      <ul class="footer-nav--links">
+        <li><a href="/products" class="footer-link">Products</a></li>
+        <li><a href="/about" class="footer-link">About</a></li>
+        <li><a href="/about" class="footer-link">Before Buying</a></li>
+        <li><a href="/contact" class="footer-link">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    background-color: var(--background-color);
+    padding: 2rem 0;
+    margin-top: auto;
+  }
+
+  .footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .footer-nav--links {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    flex-wrap: wrap;
+  }
+
+  .footer-link {
+    font-family: 'Cormorant', serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-color);
+    text-decoration: none;
+    transition: color 0.3s ease;
+    line-height: 1.2;
+  }
+
+  .footer-link:hover {
+    color: var(--link-hover-color);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  /* Mobile styles */
+  @media (max-width: 768px) {
+    .footer {
+      padding: 1.5rem 0;
+    }
+
+    .footer-container {
+      padding: 0 1rem;
+    }
+
+    .footer-nav--links {
+      flex-direction: column;
+      gap: 1rem;
+    }
+  }
+</style>

@@ -1731,7 +1731,7 @@ a.all-products-button {
 .product-list--center {
   justify-content: center;
 }
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1024px) {
   .product-list {
     --columns: 2;
     --gap: calc(var(--spacing-unit) * 2);

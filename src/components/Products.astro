@@ -114,7 +114,8 @@ const categories = [...new Set(products.flatMap(product => product.categories))]
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     border: 1px solid #f0f0f0;
     flex: 0 0 calc(33.333% - var(--gap));
-    min-width: 300px;
+    min-width: 0;
+    max-width: calc(33.333% - var(--gap));
   }
 
   .product-card:hover {
@@ -191,6 +192,13 @@ const categories = [...new Set(products.flatMap(product => product.categories))]
     display: none;
   }
 
+  @media (max-width: 1024px) {
+    .product-card {
+      flex: 0 0 calc(50% - var(--gap));
+      max-width: calc(50% - var(--gap));
+    }
+  }
+
   @media (max-width: 768px) {
     .products-container {
       padding: 1rem;
@@ -208,6 +216,7 @@ const categories = [...new Set(products.flatMap(product => product.categories))]
     .product-card {
       flex: 1 1 100%;
       min-width: unset;
+      max-width: 100%;
     }
 
     .filters {
