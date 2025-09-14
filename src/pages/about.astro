@@ -2,20 +2,38 @@
 import Layout from '../layouts/Layout.astro';
 ---
 
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="Astro description" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Special+Elite&display=swap" rel="stylesheet">
+    <meta name="generator" content={Astro.generator} />
+    <title>Astro</title>
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>
+
 <Layout>
   <div class="about-container">
-    <div class="about-hero">
+    <div class="about-hero fade-in">
       <h1 class="about-title">About</h1>
-      <p class="about-subtitle">Crafting moments of tranquility and warmth</p>
+      <p class="about-subtitle">I'm a candle-maker for your day and night, crafting candles with the planet at heart. Hope you can feel nature-inspired tenderness when lighting them up.</p>
     </div>
 
-    <div class="about-content">
+    <div class="about-content fade-in-delayed">
       <div class="about-section">
-        <h2>Our Story</h2>
+        <h2>Previous Collaborations</h2>
         <p>
-          Founded with a passion for creating beautiful, handcrafted candles, Fieur Candles has been 
-          dedicated to bringing warmth and ambiance to homes around the world. Each candle is carefully 
-          crafted using the finest materials and traditional techniques passed down through generations.
+          <strong>van der Bloom</strong>: fall workshop on Sep 28, 2024 - Sep 29, 2024
+          <br><strong>Loro Piana</strong>: private event on Jun 9, 2024
+          <br><strong>St. Regis Hong Kong</strong>: Modern Muse event on Jul 22, 2023
         </p>
       </div>
     </div>
@@ -28,6 +46,26 @@ import Layout from '../layouts/Layout.astro';
     margin: 0 auto;
     padding: 2rem;
     min-height: calc(100vh - 100px);
+	  --side-padding: 40px;
+  }
+
+  .fade-in {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 0.8s ease-out forwards;
+  }
+
+  .fade-in-delayed {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 0.8s ease-out 0.3s forwards;
+  }
+
+  @keyframes fadeInUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 
   .about-hero {
@@ -41,14 +79,14 @@ import Layout from '../layouts/Layout.astro';
     font-size: 2rem;
     font-weight: 700;
     color: #4E4E4E;
-    margin-bottom: 1rem;
+    margin-bottom: 32px;
   }
 
   .about-subtitle {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    font-size: 1.2rem;
+    font-family: 'Special Elite', sans-serif;
+    font-size: 16px;
+    line-height: 24px;
     color: #B77F92;
-    font-style: italic;
   }
 
   .about-content {
@@ -58,19 +96,19 @@ import Layout from '../layouts/Layout.astro';
   }
 
   .about-section h2 {
-    font-family: "Cormorant", serif;
-    font-size: 2rem;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    line-height: 24px;
     font-weight: 600;
     color: #4E4E4E;
     margin-bottom: 1.5rem;
-    border-bottom: 2px solid #B77F92;
     padding-bottom: 0.5rem;
   }
 
   .about-section p {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    font-size: 1.1rem;
-    line-height: 1.8;
+    font-size: 16px;
+    line-height: 24px;
     color: #4E4E4E;
     margin-bottom: 1rem;
   }
