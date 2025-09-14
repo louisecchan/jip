@@ -24,53 +24,24 @@ import Layout from '../layouts/Layout.astro';
   <div class="delivery-container">
     <div class="delivery-hero fade-in">
       <h1 class="delivery-title">Delivery</h1>
-      <p class="delivery-subtitle">We carefully package and deliver our handcrafted candles to your doorstep with care and attention to detail.</p>
     </div>
 
     <div class="delivery-content fade-in-delayed">
       <div class="delivery-section">
-        <h2>Shipping Information</h2>
+        <h2>Local delivery</h2>
         <p>
-          We ship worldwide with careful packaging to ensure your candles arrive in perfect condition. 
-          Each candle is individually wrapped and placed in protective packaging to prevent any damage during transit.
+            SF Express
+            <br>Pay on delivery
         </p>
       </div>
 
       <div class="delivery-section">
-        <h2>Delivery Times</h2>
-        <ul class="delivery-list">
-          <li><strong>Local Delivery:</strong> 2-3 business days</li>
-          <li><strong>Domestic Shipping:</strong> 3-5 business days</li>
-          <li><strong>International Shipping:</strong> 7-14 business days</li>
-        </ul>
-      </div>
-
-      <div class="delivery-section">
-        <h2>Shipping Costs</h2>
-        <ul class="delivery-list">
-          <li><strong>Free shipping</strong> on orders over $100</li>
-          <li><strong>Standard shipping:</strong> $8.99</li>
-          <li><strong>Express shipping:</strong> $15.99</li>
-          <li><strong>International shipping:</strong> Calculated at checkout</li>
-        </ul>
-      </div>
-
-      <div class="delivery-section">
-        <h2>Packaging & Care</h2>
+        <h2>International delivery</h2>
         <p>
-          Our candles are carefully packaged in eco-friendly materials. Each candle comes with care instructions 
-          to ensure you get the most out of your purchase. We use sustainable packaging materials whenever possible 
-          to align with our environmental values.
-        </p>
-      </div>
-
-      <div class="delivery-section">
-        <h2>Tracking Your Order</h2>
-        <p>
-          Once your order ships, you'll receive a tracking number via email. You can use this to track your 
-          package's journey from our workshop to your home. If you have any questions about your delivery, 
-          please don't hesitate to contact us.
-        </p>
+            Hong Kong Post Registered Mail
+            <br>Starting from US 10 
+            <br>(price depends on weight)
+        </p>  
       </div>
     </div>
   </div>
@@ -106,7 +77,6 @@ import Layout from '../layouts/Layout.astro';
 
   .delivery-hero {
     text-align: center;
-    margin-bottom: 4rem;
     padding: 3rem 0;
   }
 
@@ -129,6 +99,7 @@ import Layout from '../layouts/Layout.astro';
     display: flex;
     flex-direction: column;
     gap: 3rem;
+    text-align: center;
   }
 
   .delivery-section h2 {
