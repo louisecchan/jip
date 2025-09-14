@@ -1,8 +1,27 @@
 import Stripe from "stripe";
 
 // Initialize Stripe with your secret key
-const stripe = new Stripe(import.meta.env.STRIPE_SECRET_KEY || "", {
-  apiVersion: "2025-08-27.basil",
+const stripeSecretKey = import.meta.env.STRIPE_SECRET_KEY;
+
+if (!stripeSecretKey) {
+  console.error(
+    "STRIPE_SECRET_KEY environment variable is not set. Please check your .env file."
+  );
+  console.error(
+    "Available environment variables:",
+    Object.keys(import.meta.env)
+  );
+}
+
+// Validate the key format
+if (stripeSecretKey && !stripeSecretKey.startsWith("sk_")) {
+  console.error(
+    "Invalid Stripe secret key format. Secret keys should start with 'sk_test_' or 'sk_live_'"
+  );
+}
+
+const stripe = new Stripe(stripeSecretKey || "", {
+  apiVersion: "2024-11-20.acacia",
 });
 
 export interface StripeProduct {
@@ -29,11 +48,20 @@ export interface ProcessedProduct {
 
 export async function getStripeProducts(): Promise<ProcessedProduct[]> {
   try {
+    if (!stripeSecretKey) {
+      console.error(
+        "Cannot fetch Stripe products: STRIPE_SECRET_KEY is not configured"
+      );
+      return [];
+    }
+
     // Fetch products from Stripe
     const products = await stripe.products.list({
       active: true,
       expand: ["data.default_price"],
     });
+
+    console.log(`Fetched ${products.data.length} products from Stripe`);
 
     // Process the products to match our component's expected format
     const processedProducts: ProcessedProduct[] = products.data
@@ -61,6 +89,7 @@ export async function getStripeProducts(): Promise<ProcessedProduct[]> {
         stripePriceId: (product.default_price as Stripe.Price).id,
       }));
 
+    console.log(`Processed ${processedProducts.length} valid products`);
     return processedProducts;
   } catch (error) {
     console.error("Error fetching Stripe products:", error);
@@ -116,6 +145,18 @@ export async function createCheckoutSession(
   cancelUrl: string
 ) {
   try {
+    if (!stripeSecretKey) {
+      throw new Error(
+        "STRIPE_SECRET_KEY is not configured. Please check your .env file."
+      );
+    }
+
+    console.log("Creating Stripe checkout session with:", {
+      priceId,
+      successUrl,
+      cancelUrl,
+    });
+
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       line_items: [
@@ -129,9 +170,11 @@ export async function createCheckoutSession(
       cancel_url: cancelUrl,
     });
 
+    console.log("Checkout session created successfully:", session.id);
     return session;
   } catch (error) {
     console.error("Error creating checkout session:", error);
+    console.error("Error details:", JSON.stringify(error, null, 2));
     throw error;
   }
 }

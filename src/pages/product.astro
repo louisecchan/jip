@@ -303,15 +303,17 @@ const product = products[0] || {
   }
 
   .related-product-card h4 {
-    font-size: 1.2rem;
+    font-family: "Special Elite", sans-serif;
+    font-size: 16px;
     font-weight: 600;
     color: #4E4E4E;
     margin-bottom: 0.5rem;
   }
 
   .related-price {
-    font-size: 1.1rem;
-    font-weight: 600;
+    font-family: "Helvetica Neue", sans-serif;
+    font-size: 14px;
+    font-weight: 400;
     color: #a06b7a;
     margin-bottom: 1rem;
   }
@@ -324,6 +326,8 @@ const product = products[0] || {
     border: 2px solid #a06b7a;
     border-radius: 8px;
     text-decoration: none;
+    font-family: "Helvetica Neue", sans-serif;
+    font-size: 14px;
     font-weight: 600;
     transition: all 0.3s ease;
   }
@@ -364,49 +368,72 @@ const product = products[0] || {
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
+    // Initialize Stripe with environment variable
+    const stripePublishableKey = import.meta.env.PUBLIC_STRIPE_PUBLISHABLE_KEY;
+    
+    if (!stripePublishableKey) {
+      console.error('PUBLIC_STRIPE_PUBLISHABLE_KEY environment variable is not set');
+      console.error('Make sure you have PUBLIC_STRIPE_PUBLISHABLE_KEY in your .env file');
+      alert('Stripe configuration error. Please check your environment variables.');
+      return;
+    }
+    
+    const stripe = Stripe(stripePublishableKey);
+    
     const addToCartBtn = document.getElementById('add-to-cart');
 
-    // Add to cart functionality
+    // Add to cart functionality using client-side Stripe checkout
     addToCartBtn?.addEventListener('click', async function(this: HTMLButtonElement) {
       const priceId = this.getAttribute('data-price-id');
       
-      if (!priceId) {
-        alert('Product not available for purchase');
+      console.log('Add to cart clicked, priceId:', priceId);
+      
+      if (!priceId || priceId === 'price_example') {
+        alert('Product not available for purchase. Please check your Stripe configuration.');
+        console.error('Invalid priceId:', priceId);
         return;
       }
 
       // Show loading state
+      const originalText = this.textContent;
       this.textContent = 'Adding to Cart...';
       this.disabled = true;
 
       try {
-        const response = await fetch('/api/create-checkout-session', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            priceId: priceId,
-            successUrl: `${window.location.origin}/success`,
-            cancelUrl: `${window.location.origin}/product`,
-            quantity: 1
-          }),
+        const successUrl = `${window.location.origin}/success`;
+        const cancelUrl = `${window.location.origin}/product`;
+
+        console.log('Creating checkout session with:', {
+          priceId,
+          successUrl,
+          cancelUrl
         });
 
-        const data = await response.json();
+        // Use Stripe's client-side checkout
+        const { error } = await stripe.redirectToCheckout({
+          lineItems: [{
+            price: priceId,
+            quantity: 1,
+          }],
+          mode: 'payment',
+          successUrl: successUrl,
+          cancelUrl: cancelUrl,
+        });
 
-        if (data.url) {
-          // Redirect to Stripe checkout
-          window.location.href = data.url;
-        } else {
-          throw new Error(data.error || 'Failed to create checkout session');
+        if (error) {
+          console.error('Stripe checkout error:', error);
+          throw new Error(error.message || 'Failed to create checkout session');
         }
+
+        console.log('Checkout session created, redirecting...');
+        
       } catch (error) {
         console.error('Error adding to cart:', error);
-        alert('Failed to add to cart. Please try again.');
+        const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
+        alert(`Failed to add to cart: ${errorMessage}. Please check the console for more details.`);
         
         // Reset button state
-        this.textContent = 'Add to Cart';
+        this.textContent = originalText;
         this.disabled = false;
       }
     });

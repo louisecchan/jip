@@ -1,7 +1,0 @@
-[
-  {
-    "key": "cmd+k",
-    "command": "aipopup.action.modal.generate",
-    "when": "editorTextFocus"
-  }
-]

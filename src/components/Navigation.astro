@@ -10,10 +10,18 @@
       <a href="/before-buying" class="nav-link">before buying</a>
       <a href="/contact" class="nav-link">contact</a>
     </div>
-    <div class="nav-toggle">
-      <span></span>
-      <span></span>
-      <span></span>
+    <div class="nav-right">
+      <a href="/cart" class="cart-icon" aria-label="Shopping Cart">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M7 18C5.9 18 5.01 18.9 5.01 20S5.9 22 7 22 8.99 21.1 8.99 20 8.1 18 7 18ZM1 2V4H3L6.6 11.59L5.25 14.04C5.09 14.32 5 14.65 5 15C5 16.1 5.9 17 7 17H19V15H7.42C7.28 15 7.17 14.89 7.17 14.75L7.2 14.63L8.1 13H15.55C16.3 13 16.96 12.59 17.3 11.97L20.88 5H5.21L4.27 3H1V2ZM17 18C15.9 18 15.01 18.9 15.01 20S15.9 22 17 22 18.99 21.1 18.99 20 18.1 18 17 18Z" fill="currentColor"/>
+        </svg>
+        <span class="cart-count">0</span>
+      </a>
+      <div class="nav-toggle">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
     </div>
   </div>
 </nav>
@@ -86,6 +94,46 @@
     width: 100%;
   }
 
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .cart-icon {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #4E4E4E;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    padding: 0.5rem;
+    border-radius: 50%;
+  }
+
+  .cart-icon:hover {
+    color: #B77F92;
+    background-color: rgba(183, 127, 146, 0.1);
+  }
+
+  .cart-count {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: #B77F92;
+    color: white;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 600;
+    min-width: 20px;
+  }
+
   .nav-toggle {
     display: none;
     flex-direction: column;
@@ -124,6 +172,21 @@
 
     .nav-menu.active {
       left: 0;
+    }
+
+    .nav-right {
+      gap: 0.5rem;
+    }
+
+    .cart-icon {
+      padding: 0.25rem;
+    }
+
+    .cart-count {
+      width: 18px;
+      height: 18px;
+      font-size: 11px;
+      min-width: 18px;
     }
 
     .nav-toggle {
