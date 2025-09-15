@@ -4,8 +4,11 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "astro dev",
+    "dev:prod": "NODE_ENV=production astro dev",
     "build": "astro build",
+    "build:prod": "NODE_ENV=production astro build",
     "preview": "astro preview",
+    "preview:prod": "NODE_ENV=production astro preview",
     "astro": "astro"
   },
   "dependencies": {

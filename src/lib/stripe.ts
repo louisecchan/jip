@@ -21,7 +21,7 @@ if (stripeSecretKey && !stripeSecretKey.startsWith("sk_")) {
 }
 
 const stripe = new Stripe(stripeSecretKey || "", {
-  apiVersion: "2024-11-20.acacia",
+  apiVersion: "2025-08-27.basil",
 });
 
 export interface StripeProduct {
@@ -174,6 +174,41 @@ export async function createCheckoutSession(
     return session;
   } catch (error) {
     console.error("Error creating checkout session:", error);
+    console.error("Error details:", JSON.stringify(error, null, 2));
+    throw error;
+  }
+}
+
+export async function createCartCheckoutSession(
+  lineItems: Array<{ price: string; quantity: number }>,
+  successUrl: string,
+  cancelUrl: string
+) {
+  try {
+    if (!stripeSecretKey) {
+      throw new Error(
+        "STRIPE_SECRET_KEY is not configured. Please check your .env file."
+      );
+    }
+
+    console.log("Creating Stripe cart checkout session with:", {
+      lineItems,
+      successUrl,
+      cancelUrl,
+    });
+
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ["card"],
+      line_items: lineItems,
+      mode: "payment",
+      success_url: successUrl,
+      cancel_url: cancelUrl,
+    });
+
+    console.log("Cart checkout session created successfully:", session.id);
+    return session;
+  } catch (error) {
+    console.error("Error creating cart checkout session:", error);
     console.error("Error details:", JSON.stringify(error, null, 2));
     throw error;
   }
