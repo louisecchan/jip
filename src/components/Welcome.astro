@@ -95,8 +95,7 @@ const themeColors = {
   <body id="home" class="theme">
     <!-- Main Tagline with Smooth Transition -->
     <a href="/products" class="tagline-redirect" id="smooth-transition">
-      <span id="tagline" class="special-elite-regular">light and see.</span>
-      <span class="typed-cursor typed-cursor--blink" aria-hidden="true">|</span>
+      <span id="tagline" class="special-elite-regular">Candle the goodness.</span>
     </a>
     
     <!-- Typed.js Library -->
@@ -112,8 +111,7 @@ const themeColors = {
             loop: true,
             backSpeed: 30,
             backDelay: 2000,
-            showCursor: true,
-            cursorChar: "|"
+            showCursor: false
           });
         } else {
           console.error('Typed.js library not loaded');
@@ -137,6 +135,8 @@ const themeColors = {
     <style data-typed-js-cursor-css="true">
       .typed-cursor {
         opacity: 1;
+        position: relative;
+        display: inline;
       }
       .typed-cursor.typed-cursor--blink {
         animation: typedjsBlink 0.7s infinite;
