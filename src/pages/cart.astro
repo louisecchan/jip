@@ -1,0 +1,638 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout>
+  <div class="cart-page">
+    <div class="cart-container">
+      <h1 class="cart-title">Cart</h1>
+
+      <!-- Cart Items -->
+      <div class="cart-items" id="cart-items">
+        <!-- Cart items will be populated by JavaScript -->
+      </div>
+
+      <!-- Empty Cart Message -->
+      <div class="empty-cart" id="empty-cart" style="display: none;">
+        <div class="empty-cart-content">
+          <svg
+            width="64"
+            height="64"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M7 18C5.9 18 5.01 18.9 5.01 20S5.9 22 7 22 8.99 21.1 8.99 20 8.1 18 7 18ZM1 2V4H3L6.6 11.59L5.25 14.04C5.09 14.32 5 14.65 5 15C5 16.1 5.9 17 7 17H19V15H7.42C7.28 15 7.17 14.89 7.17 14.75L7.2 14.63L8.1 13H15.55C16.3 13 16.96 12.59 17.3 11.97L20.88 5H5.21L4.27 3H1V2ZM17 18C15.9 18 15.01 18.9 15.01 20S15.9 22 17 22 18.99 21.1 18.99 20 18.1 18 17 18Z"
+              fill="#ccc"></path>
+          </svg>
+          <h2>Your cart is empty</h2>
+          <p>Looks like you haven't added any items to your cart yet.</p>
+          <a href="/products" class="continue-shopping-btn">Continue Shopping</a
+          >
+        </div>
+      </div>
+
+      <!-- Cart Summary -->
+      <div class="cart-summary" id="cart-summary" style="display: none;">
+        <div class="summary-content">
+          <div class="summary-row">
+            <span class="summary-label">Subtotal:</span>
+            <span class="summary-value" id="cart-subtotal">$0.00</span>
+          </div>
+          <button class="checkout-btn" id="checkout-btn"> Checkout </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .cart-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    font-family: "Cormorant", serif;
+  }
+
+  .cart-container {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 3rem;
+    margin-bottom: 4rem;
+  }
+
+  .cart-title {
+    font-family: "Cormorant", sans-serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #4e4e4e;
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+    grid-column: 1 / -1;
+    text-align: center;
+  }
+
+  .cart-items {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .cart-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.5rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    background: white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  }
+
+  .cart-item.cart-item-image {
+    width: 80px;
+    height: 80px;
+  }
+
+  .cart-item-image {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 4px;
+  }
+
+  .cart-item-details {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .cart-item-name {
+    font-family: "Special Elite", sans-serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #4e4e4e;
+    margin: 0;
+  }
+
+  .cart-item-price {
+    font-family: "Helvetica Neue", sans-serif;
+    font-size: 1rem;
+    color: #a06b7a;
+    font-weight: 500;
+  }
+
+  .cart-item-controls {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  /* Additional styles for the quantity input */
+  .product-quantity {
+    border: none;
+    background: transparent;
+    text-align: center;
+    width: 48px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #4e4e4e;
+    font-family: "Helvetica Neue", sans-serif;
+  }
+
+  .product-quantity:focus {
+    outline: none;
+  }
+
+  .product-quantity::-webkit-outer-spin-button,
+  .product-quantity::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  .product-quantity[type="number"] {
+    -moz-appearance: textfield;
+  }
+
+  .empty-cart {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 400px;
+  }
+
+  .empty-cart-content {
+    text-align: center;
+    color: #666;
+  }
+
+  .empty-cart-content h2 {
+    font-family: "Special Elite", sans-serif;
+    font-size: 1.5rem;
+    margin: 1rem 0 0.5rem;
+    color: #4e4e4e;
+  }
+
+  .empty-cart-content p {
+    margin-bottom: 2rem;
+    font-family: "Helvetica Neue", sans-serif;
+  }
+
+  .continue-shopping-btn {
+    display: inline-block;
+    padding: 1rem 2rem;
+    background-color: #a06b7a;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-family: "Helvetica Neue", sans-serif;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+  }
+
+  .continue-shopping-btn:hover {
+    background-color: #8a5a68;
+  }
+
+  .cart-summary {
+    border: 1px solid var(--border-color);
+    padding: 2rem;
+    border-radius: 4px;
+    height: fit-content;
+    position: sticky;
+    top: 2rem;
+  }
+
+  .summary-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .summary-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: "Helvetica Neue", sans-serif;
+  }
+
+  .summary-row.total {
+    border-top: 1px solid #ddd;
+    padding-top: 1rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #4e4e4e;
+  }
+
+  .summary-label {
+    color: #666;
+    font-size: 20px;
+    font-weight: 700;
+  }
+
+  .summary-value {
+    font-weight: 500;
+    font-size: 16px;
+    color: #4e4e4e;
+  }
+
+  .checkout-btn {
+    width: 100%;
+    padding: 1rem 2rem;
+    background-color: #a06b7a;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-family: "Helvetica Neue", sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 1rem;
+  }
+
+  .checkout-btn:hover {
+    background-color: #8a5a68;
+  }
+
+  .checkout-btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+
+  /* Mobile Responsiveness */
+  @media (max-width: 768px) {
+    .cart-page {
+      padding: 1rem;
+    }
+
+    .cart-container {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .cart-item {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+
+    .cart-item-controls {
+      width: 100%;
+      justify-content: space-between;
+    }
+
+    .cart-summary {
+      position: static;
+    }
+  }
+</style>
+
+<script>
+  // Define types for cart items
+  interface CartItem {
+    id: string;
+    name: string;
+    price: number;
+    quantity: number;
+    image: string;
+  }
+
+  interface Cart {
+    items: CartItem[];
+    total: number;
+    itemCount: number;
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    // Load and display cart
+    loadCart();
+
+    // Listen for cart updates
+    window.addEventListener("cartUpdated", loadCart);
+  });
+
+  function loadCart() {
+    const cart = getCart();
+    const cartItemsContainer = document.getElementById("cart-items");
+    const emptyCartContainer = document.getElementById("empty-cart");
+    const cartSummaryContainer = document.getElementById("cart-summary");
+
+    if (!cartItemsContainer || !emptyCartContainer || !cartSummaryContainer)
+      return;
+
+    if (cart.items.length === 0) {
+      // Show empty cart
+      cartItemsContainer.style.display = "none";
+      emptyCartContainer.style.display = "flex";
+      cartSummaryContainer.style.display = "none";
+    } else {
+      // Show cart items
+      cartItemsContainer.style.display = "flex";
+      emptyCartContainer.style.display = "none";
+      cartSummaryContainer.style.display = "block";
+
+      // Render cart items
+      renderCartItems(cart.items);
+
+      // Add event listeners for quantity controls
+      addQuantityEventListeners();
+
+      // Update summary
+      updateCartSummary(cart);
+    }
+  }
+
+  function renderCartItems(items: CartItem[]) {
+    const cartItemsContainer = document.getElementById("cart-items");
+    if (!cartItemsContainer) return;
+
+    cartItemsContainer.innerHTML = items
+      .map(
+        (item: CartItem) => `
+      <div class="cart-item" data-item-id="${item.id}">
+        <div class="cart-item-image-holder">
+          <a href="/product/${item.id}" class="cart-item-image-link">
+            <img src="${item.image}" alt="${item.name}" class="cart-item-image">
+          </a>
+        </div>
+        <div class="cart-item-detail">
+          <h3 class="product-name">${item.name}</h3>
+        </div>
+        <div class="cart-qty">
+          <div class="qty-holder" data-item-id="${item.id}">
+            <button title="Decrease quantity of ${item.name}" class="qty-button qty-button--decrease" data-func="decrease" type="button" data-item-id="${item.id}">
+              <svg aria-hidden="true" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0.5 13 2">
+                <path d="M13 1.5C13 2.0625 12.5312 2.5 12 2.5H1C0.4375 2.5 0 2.0625 0 1.5C0 0.96875 0.4375 0.5 1 0.5H12C12.5312 0.5 13 0.96875 13 1.5Z"></path>
+              </svg>
+            </button>
+            <input aria-label="Quantity of ${item.name}" type="number" autocomplete="off" class="product-quantity" name="cart[update][${item.id}]" min="0" value="${item.quantity}" data-item-id="${item.id}">
+            <button title="Increase quantity of ${item.name}" class="qty-button qty-button--increase" data-func="increase" type="button" data-item-id="${item.id}">
+              <svg fill="currentColor" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 13 13">
+                <path d="M7.5 1V5.5H12C12.5312 5.5 13 5.96875 13 6.5C13 7.0625 12.5312 7.5 12 7.5H7.5V12C7.5 12.5625 7.03125 13 6.5 13C5.9375 13 5.5 12.5625 5.5 12V7.5H1C0.4375 7.5 0 7.0625 0 6.5C0 5.96875 0.4375 5.5 1 5.5H5.5V1C5.5 0.46875 5.9375 0 6.5 0C7.03125 0 7.5 0.46875 7.5 1Z"></path>
+              </svg>
+            </button>
+          </div>
+          <button class="cart-remove-item cart-remove-item--link button button--minimal" data-item-id="${item.id}" type="button">Remove<span class="sr-only"> ${item.name} from cart</span></button>
+        </div>
+        <div class="cart-item-price">$${item.price.toFixed(2)}</div>
+      </div>
+    `,
+      )
+      .join("");
+  }
+
+  function updateCartSummary(cart: Cart) {
+    const subtotalElement = document.getElementById("cart-subtotal");
+    const totalElement = document.getElementById("cart-total");
+
+    if (subtotalElement) {
+      subtotalElement.textContent = `$${cart.total.toFixed(2)}`;
+    }
+
+    if (totalElement) {
+      totalElement.textContent = `$${cart.total.toFixed(2)}`;
+    }
+  }
+
+  function getCart() {
+    if (typeof window === "undefined") {
+      return { items: [], total: 0, itemCount: 0 };
+    }
+
+    try {
+      const cartData = localStorage.getItem("satellite_spectrum_cart");
+      if (!cartData) {
+        return { items: [], total: 0, itemCount: 0 };
+      }
+
+      return JSON.parse(cartData);
+    } catch (error) {
+      console.error("Error parsing cart data:", error);
+      return { items: [], total: 0, itemCount: 0 };
+    }
+  }
+
+  function updateQuantity(itemId: string, newQuantity: number) {
+    if (typeof window === "undefined") return;
+
+    try {
+      const cart = getCart();
+      const itemIndex = cart.items.findIndex(
+        (item: CartItem) => item.id === itemId,
+      );
+
+      if (itemIndex > -1) {
+        if (newQuantity <= 0) {
+          // Remove item if quantity is 0 or negative
+          cart.items.splice(itemIndex, 1);
+        } else {
+          cart.items[itemIndex].quantity = newQuantity;
+        }
+
+        // Recalculate totals
+        cart.total = cart.items.reduce(
+          (sum: number, item: CartItem) => sum + item.price * item.quantity,
+          0,
+        );
+        cart.itemCount = cart.items.reduce(
+          (sum: number, item: CartItem) => sum + item.quantity,
+          0,
+        );
+
+        // Save to localStorage
+        localStorage.setItem("satellite_spectrum_cart", JSON.stringify(cart));
+
+        // Dispatch cart update event
+        window.dispatchEvent(new CustomEvent("cartUpdated", { detail: cart }));
+
+        // Reload cart display
+        loadCart();
+      }
+    } catch (error) {
+      console.error("Error updating quantity:", error);
+    }
+  }
+
+  function removeItem(itemId: string) {
+    if (typeof window === "undefined") return;
+
+    try {
+      const cart = getCart();
+      cart.items = cart.items.filter((item: CartItem) => item.id !== itemId);
+
+      // Recalculate totals
+      cart.total = cart.items.reduce(
+        (sum: number, item: CartItem) => sum + item.price * item.quantity,
+        0,
+      );
+      cart.itemCount = cart.items.reduce(
+        (sum: number, item: CartItem) => sum + item.quantity,
+        0,
+      );
+
+      // Save to localStorage
+      localStorage.setItem("satellite_spectrum_cart", JSON.stringify(cart));
+
+      // Dispatch cart update event
+      window.dispatchEvent(new CustomEvent("cartUpdated", { detail: cart }));
+
+      // Reload cart display
+      loadCart();
+    } catch (error) {
+      console.error("Error removing item:", error);
+    }
+  }
+
+  function addQuantityEventListeners() {
+    // Add event listeners for quantity buttons
+    const decreaseButtons = document.querySelectorAll(".qty-button--decrease");
+    const increaseButtons = document.querySelectorAll(".qty-button--increase");
+    const quantityInputs = document.querySelectorAll(".product-quantity");
+    const removeButtons = document.querySelectorAll(".cart-remove-item");
+
+    console.log("Adding event listeners:", {
+      decreaseButtons: decreaseButtons.length,
+      increaseButtons: increaseButtons.length,
+      quantityInputs: quantityInputs.length,
+      removeButtons: removeButtons.length,
+    });
+
+    decreaseButtons.forEach((button) => {
+      button.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        console.log("Decrease button clicked");
+        const target = e.currentTarget as HTMLElement;
+        const itemId = target.getAttribute("data-item-id");
+        console.log("Item ID:", itemId);
+        if (itemId) {
+          const cart = getCart();
+          const item = cart.items.find((item: CartItem) => item.id === itemId);
+          if (item && item.quantity > 1) {
+            updateQuantity(itemId, item.quantity - 1);
+          }
+        }
+      });
+    });
+
+    increaseButtons.forEach((button) => {
+      button.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        console.log("Increase button clicked");
+        const target = e.currentTarget as HTMLElement;
+        const itemId = target.getAttribute("data-item-id");
+        console.log("Item ID:", itemId);
+        if (itemId) {
+          const cart = getCart();
+          const item = cart.items.find((item: CartItem) => item.id === itemId);
+          if (item) {
+            updateQuantity(itemId, item.quantity + 1);
+          }
+        }
+      });
+    });
+
+    quantityInputs.forEach((input) => {
+      input.addEventListener("change", (e) => {
+        const target = e.target as HTMLInputElement;
+        const itemId = target.getAttribute("data-item-id");
+        const newQuantity = parseInt(target.value) || 0;
+        if (itemId) {
+          updateQuantity(itemId, newQuantity);
+        }
+      });
+    });
+
+    removeButtons.forEach((button) => {
+      button.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const target = e.currentTarget as HTMLElement;
+        const itemId = target.getAttribute("data-item-id");
+        if (itemId) {
+          removeItem(itemId);
+        }
+      });
+    });
+  }
+
+  // Checkout functionality
+  document.addEventListener("DOMContentLoaded", function () {
+    const checkoutBtn = document.getElementById(
+      "checkout-btn",
+    ) as HTMLButtonElement;
+
+    checkoutBtn?.addEventListener("click", async function () {
+      const cart = getCart();
+
+      if (cart.items.length === 0) {
+        alert("Your cart is empty");
+        return;
+      }
+
+      // Show loading state
+      const originalText = this.textContent;
+      this.textContent = "Processing...";
+      this.disabled = true;
+
+      try {
+        // Create line items for Stripe checkout
+        const lineItems = cart.items.map((item: CartItem) => ({
+          price: item.stripePriceId,
+          quantity: item.quantity,
+        }));
+
+        console.log("Creating checkout session with:", {
+          cart,
+          lineItems,
+        });
+
+        // Call our API to create checkout session
+        const requestBody = { lineItems };
+        console.log("Sending request body:", requestBody);
+
+        const response = await fetch("/api/create-cart-checkout-session", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(requestBody),
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(
+            errorData.error || "Failed to create checkout session",
+          );
+        }
+
+        const { url } = await response.json();
+
+        if (!url) {
+          throw new Error("No checkout URL received from server");
+        }
+
+        console.log("Checkout session created, redirecting to:", url);
+
+        // Redirect to Stripe checkout
+        window.location.href = url;
+      } catch (error) {
+        console.error("Error during checkout:", error);
+        const errorMessage =
+          error instanceof Error ? error.message : "Unknown error occurred";
+        alert(
+          `Checkout failed: ${errorMessage}. Please check the console for more details.`,
+        );
+
+        // Reset button state
+        this.textContent = originalText;
+        this.disabled = false;
+      }
+    });
+  });
+</script>

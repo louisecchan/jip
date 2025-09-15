@@ -446,7 +446,7 @@ const product = products[0] || {
     try {
       // Get current cart
       const cartData = localStorage.getItem('satellite_spectrum_cart');
-      let cart = cartData ? JSON.parse(cartData) : { items: [], total: 0, itemCount: 0 };
+      const cart = cartData ? JSON.parse(cartData) : { items: [], total: 0, itemCount: 0 };
       
       // Check if item already exists
       const existingItemIndex = cart.items.findIndex(cartItem => cartItem.id === item.id);

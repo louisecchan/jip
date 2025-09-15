@@ -1,34 +1,25 @@
 ---
-
 import "../styles/theme.css";
 import "../styles/css2.css";
 import "../styles/css.css";
 
 // Astro frontmatter
 const title = "Home | fieur handcrafted candles";
-const description = "Experience Fieur Candles, where nature's beauty meets good intentions. Our thoughtfully crafted candles enhance every moment, from serene mornings to cozy evenings, using ingredients to illuminate your space and create a warm, homey atmosphere.";
+const description =
+  "Experience Fieur Candles, where nature's beauty meets good intentions. Our thoughtfully crafted candles enhance every moment, from serene mornings to cozy evenings, using ingredients to illuminate your space and create a warm, homey atmosphere.";
 const canonicalUrl = "https://www.fieur-candles.com/";
-const ogImage = "https://res.cloudinary.com/dlmgs0z2s/image/upload/v1757705171/fieur-og-image_onlvjd.png/";
-const themeColors = {
-  buttonTextColor: "#FFFBF5",
-  buttonHoverBackgroundColor: "#B84C22",
-  backgroundColor: "rgb(255, 235, 204)",
-  linkTextColor: "#4E4E4E",
-  linkHoverColor: "#B77F92",
-  primaryTextColor: "#4E4E4E",
-  buttonBackgroundColor: "#A95A70"
-};
+const ogImage =
+  "https://res.cloudinary.com/dlmgs0z2s/image/upload/v1757705171/fieur-og-image_onlvjd.png/";
 ---
 
-<!DOCTYPE html>
+<!doctype html>
 <html class="mpanjuh idc0_350" lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
-        
-    
+
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="fieur" />
@@ -36,73 +27,87 @@ const themeColors = {
     <meta property="og:url" content={canonicalUrl} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={ogImage} />
-        
+
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com/" />
-    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="true" />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com/"
+      crossorigin="true"
+    />
 
     <!-- Favicons -->
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    
+
     <!-- Structured Data -->
-    <script type="application/ld+json" set:html={JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "BreadcrumbList",
-      "itemListElement": [
-        {
-          "@type": "ListItem",
-          "position": 1,
-          "name": "Home",
-          "item": canonicalUrl
-        }
-      ]
-    })}></script>
-    
-    <script type="application/ld+json" set:html={JSON.stringify([
-      {
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify({
         "@context": "https://schema.org",
-        "@type": "WebSite",
-        "name": "fieur",
-        "description": description,
-        "url": canonicalUrl,
-        "potentialAction": {
-          "@type": "SearchAction",
-          "target": {
-            "@type": "EntryPoint",
-            "urlTemplate": "https://www.fieur-candles.com/products?search={search_term_string}"
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Home",
+            item: canonicalUrl,
           },
-          "query-input": "required name=search_term_string"
-        }
-      },
-      {
-        "@context": "https://schema.org",
-        "@type": "Organization",
-        "name": "fieur",
-        "description": description,
-        "url": canonicalUrl,
-        "sameAs": ["https://www.instagram.com/_fieur/"]
-      }
-    ])}></script>
-    
-    
+        ],
+      })}
+    />
+
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify([
+        {
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          name: "fieur",
+          description: description,
+          url: canonicalUrl,
+          potentialAction: {
+            "@type": "SearchAction",
+            target: {
+              "@type": "EntryPoint",
+              urlTemplate:
+                "https://www.fieur-candles.com/products?search={search_term_string}",
+            },
+            "query-input": "required name=search_term_string",
+          },
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          name: "fieur",
+          description: description,
+          url: canonicalUrl,
+          sameAs: ["https://www.instagram.com/_fieur/"],
+        },
+      ])}
+    />
+
     <!-- External Scripts -->
     <script id="stripe-js" src="../scripts/Untitled.js" async></script>
     <script async src="../scripts/google-analytics_analytics.js"></script>
     <script src="../scripts/prompt.js"></script>
-    <script id="simplify-jobs-page-script" src="../scripts/pageScript.bundle.js"></script>
+    <script id="simplify-jobs-page-script" src="../scripts/pageScript.bundle.js"
+    ></script>
   </head>
-  
+
   <body id="home" class="theme">
     <!-- Main Tagline with Smooth Transition -->
     <a href="/products" class="tagline-redirect" id="smooth-transition">
-      <span id="tagline" class="special-elite-regular">Candle the goodness.</span>
+      <span id="tagline" class="special-elite-regular"
+        >Candle the goodness.</span
+      >
     </a>
-    
+
     <!-- Typed.js Library -->
     <script src="./typed.umd.js"></script>
-    
+
     <!-- Typed.js Configuration -->
-    <script set:html={`
+    <script
+      set:html={`
       document.addEventListener('DOMContentLoaded', function() {
         if (typeof Typed !== 'undefined') {
           var typed = new Typed("#tagline", {
@@ -117,10 +122,12 @@ const themeColors = {
           console.error('Typed.js library not loaded');
         }
       });
-    `}></script>
-    
+    `}
+    />
+
     <!-- Smooth Transition Script -->
-    <script set:html={`
+    <script
+      set:html={`
       document.getElementById("smooth-transition").addEventListener("click", function (event) {
         event.preventDefault();
         document.body.style.transition = "opacity 0.5s";
@@ -129,8 +136,9 @@ const themeColors = {
           window.location.href = "/products";
         }, 500);
       });
-    `}></script>
-    
+    `}
+    />
+
     <!-- Typed.js Cursor Styles -->
     <style data-typed-js-cursor-css="true">
       .typed-cursor {
