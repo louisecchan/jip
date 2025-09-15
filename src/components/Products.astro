@@ -34,7 +34,7 @@ const categories = [...new Set(products.flatMap(product => product.categories))]
   <div class="product-list">
     {products.map(product => (
       <div class="product-card" data-categories={product.categories.map(cat => cat.toLowerCase()).join('|')}>
-        <div class="product-image">
+        <div class="product-image" data-product-id={product.id}>
           <img src={product.image} alt={product.name} />
         </div>
         <div class="product-info">
@@ -99,7 +99,7 @@ const categories = [...new Set(products.flatMap(product => product.categories))]
     --spacing-unit: 8px;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: flex-start;
     margin: var(--spacing-unit) 0 0;
     gap: var(--gap);
     row-gap: var(--row-gap);
@@ -118,6 +118,17 @@ const categories = [...new Set(products.flatMap(product => product.categories))]
     max-width: calc(33.333% - var(--gap));
   }
 
+  /* Special handling for single product */
+  .product-list:has(.product-card:only-child) {
+    justify-content: center;
+  }
+
+  .product-list:has(.product-card:only-child) .product-card {
+    flex: 0 0 auto;
+    max-width: 400px;
+    min-width: 300px;
+  }
+
   .product-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
@@ -127,6 +138,7 @@ const categories = [...new Set(products.flatMap(product => product.categories))]
     width: 100%;
     height: 250px;
     overflow: hidden;
+    cursor: pointer;
   }
 
   
@@ -236,6 +248,7 @@ const categories = [...new Set(products.flatMap(product => product.categories))]
     const filterButtons = document.querySelectorAll('.filter-btn');
     const productCards = document.querySelectorAll('.product-card');
     const productPrices = document.querySelectorAll('.product-price');
+    const productImages = document.querySelectorAll('.product-image');
 
     // Filter functionality
     filterButtons.forEach(button => {
@@ -265,6 +278,16 @@ const categories = [...new Set(products.flatMap(product => product.categories))]
     // Product price click functionality
     productPrices.forEach(price => {
       price.addEventListener('click', function(this: HTMLSpanElement) {
+        const productId = this.getAttribute('data-product-id');
+        if (productId) {
+          window.location.href = `/product/${productId}`;
+        }
+      });
+    });
+
+    // Product image click functionality
+    productImages.forEach(image => {
+      image.addEventListener('click', function(this: HTMLDivElement) {
         const productId = this.getAttribute('data-product-id');
         if (productId) {
           window.location.href = `/product/${productId}`;
