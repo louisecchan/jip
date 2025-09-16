@@ -12,8 +12,8 @@ export const POST: APIRoute = async ({ request }) => {
       });
     }
 
-    // Get the origin from the request headers
-    const origin = request.headers.get("origin") || "http://localhost:4321";
+    // Derive origin from the request URL (more reliable in production)
+    const { origin } = new URL(request.url);
     const successUrl = `${origin}/success`;
     const cancelUrl = `${origin}/product`;
 
@@ -34,7 +34,7 @@ export const POST: APIRoute = async ({ request }) => {
       {
         status: 200,
         headers: { "Content-Type": "application/json" },
-      }
+      },
     );
   } catch (error) {
     console.error("Error creating checkout session:", error);
@@ -49,7 +49,7 @@ export const POST: APIRoute = async ({ request }) => {
       {
         status: 500,
         headers: { "Content-Type": "application/json" },
-      }
+      },
     );
   }
 };

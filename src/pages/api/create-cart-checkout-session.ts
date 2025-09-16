@@ -7,8 +7,8 @@ export const POST: APIRoute = async ({ request }) => {
   try {
     // Get the raw request body first
     const body = await request.text();
-    console.log('Raw request body:', body);
-    
+    console.log("Raw request body:", body);
+
     if (!body) {
       return new Response(JSON.stringify({ error: "Request body is empty" }), {
         status: 400,
@@ -21,11 +21,14 @@ export const POST: APIRoute = async ({ request }) => {
       const parsedBody = JSON.parse(body);
       lineItems = parsedBody.lineItems;
     } catch (parseError) {
-      console.error('JSON parse error:', parseError);
-      return new Response(JSON.stringify({ error: "Invalid JSON in request body" }), {
-        status: 400,
-        headers: { "Content-Type": "application/json" },
-      });
+      console.error("JSON parse error:", parseError);
+      return new Response(
+        JSON.stringify({ error: "Invalid JSON in request body" }),
+        {
+          status: 400,
+          headers: { "Content-Type": "application/json" },
+        },
+      );
     }
 
     if (!lineItems || !Array.isArray(lineItems) || lineItems.length === 0) {
@@ -34,7 +37,7 @@ export const POST: APIRoute = async ({ request }) => {
         {
           status: 400,
           headers: { "Content-Type": "application/json" },
-        }
+        },
       );
     }
 
@@ -46,13 +49,13 @@ export const POST: APIRoute = async ({ request }) => {
           {
             status: 400,
             headers: { "Content-Type": "application/json" },
-          }
+          },
         );
       }
     }
 
-    // Get the origin from the request headers
-    const origin = request.headers.get("origin") || "http://localhost:4321";
+    // Derive origin from the request URL (more reliable in production)
+    const { origin } = new URL(request.url);
     const successUrl = `${origin}/success`;
     const cancelUrl = `${origin}/cart`;
 
@@ -66,7 +69,7 @@ export const POST: APIRoute = async ({ request }) => {
     const session = await createCartCheckoutSession(
       lineItems,
       successUrl,
-      cancelUrl
+      cancelUrl,
     );
 
     return new Response(
@@ -77,7 +80,7 @@ export const POST: APIRoute = async ({ request }) => {
       {
         status: 200,
         headers: { "Content-Type": "application/json" },
-      }
+      },
     );
   } catch (error) {
     console.error("Error creating cart checkout session:", error);
@@ -92,7 +95,7 @@ export const POST: APIRoute = async ({ request }) => {
       {
         status: 500,
         headers: { "Content-Type": "application/json" },
-      }
+      },
     );
   }
 };

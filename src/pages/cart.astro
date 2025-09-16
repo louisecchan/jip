@@ -299,6 +299,7 @@ import Layout from "../layouts/Layout.astro";
     price: number;
     quantity: number;
     image: string;
+    stripePriceId: string;
   }
 
   interface Cart {
@@ -604,14 +605,32 @@ import Layout from "../layouts/Layout.astro";
           body: JSON.stringify(requestBody),
         });
 
+        const contentType = response.headers.get("content-type") || "";
         if (!response.ok) {
-          const errorData = await response.json();
-          throw new Error(
-            errorData.error || "Failed to create checkout session",
-          );
+          // Try to extract useful error info even if not JSON
+          if (contentType.includes("application/json")) {
+            const errorData = await response.json();
+            throw new Error(
+              errorData.error || "Failed to create checkout session",
+            );
+          } else {
+            const errorText = await response.text();
+            console.error("Non-JSON error response:", errorText);
+            throw new Error(
+              `Failed to create checkout session (status ${response.status}).`,
+            );
+          }
         }
 
-        const { url } = await response.json();
+        let url: string | undefined;
+        if (contentType.includes("application/json")) {
+          const data = await response.json();
+          url = data?.url;
+        } else {
+          const text = await response.text();
+          console.error("Unexpected non-JSON success response:", text);
+          throw new Error("Server returned non-JSON response");
+        }
 
         if (!url) {
           throw new Error("No checkout URL received from server");
