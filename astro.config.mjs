@@ -1,12 +1,12 @@
 // @ts-check
 import { defineConfig } from "astro/config";
-import node from "@astrojs/node";
+import netlify from "@astrojs/netlify/functions";
 
 // https://astro.build/config
 export default defineConfig({
-  output: "server",
-  adapter: node({
-    mode: "standalone",
+  adapter: netlify({
+    // Use Netlify Functions (Node) runtime
+    // For Edge runtime, switch to '@astrojs/netlify/edge'
   }),
   // Platform-specific build configuration
   build: {
