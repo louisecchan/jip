@@ -1,75 +1,78 @@
 ---
-import Navigation from '../components/Navigation.astro';
-import Footer from '../components/Footer.astro';
+import Navigation from "../components/Navigation.astro";
+import Footer from "../components/Footer.astro";
 // Layout with navigation and header below navigation for all pages
+import "../styles/theme.css";
 ---
 
 <!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Fieur Candles</title>
-		<link rel="preconnect" href="https://fonts.googleapis.com">
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-		<link href="https://fonts.googleapis.com/css2?family=Cormorant:wght@400;700&family=Special+Elite&display=swap" rel="stylesheet">
-		<link rel="stylesheet" href="/src/styles/theme.css">
-	</head>
-	<body>
-		<Navigation />
-		<header class="fieur-header">
-			<a href="/products" class="fieur-logo">fieur</a>
-		</header>
-		<slot />
-		<Footer />
-	</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Fieur Candles</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant:wght@400;700&family=Special+Elite&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <Navigation />
+    <header class="fieur-header">
+      <a href="/products" class="fieur-logo">fieur</a>
+    </header>
+    <slot />
+    <Footer />
+  </body>
 </html>
 
 <style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
+  html,
+  body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+  }
 
-	body {
-		display: flex;
-		flex-direction: column;
-		min-height: 100vh;
-	}
+  body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
 
-	.fieur-header {
-		padding: 1rem 2rem;
-		text-align: center;
-		position: sticky;
-		top: 0;
-		z-index: 99;
-		color: #4E4E4E;
-	}
+  .fieur-header {
+    padding: 1rem 2rem;
+    text-align: center;
+    position: sticky;
+    top: 0;
+    z-index: 99;
+    color: #4e4e4e;
+  }
 
-	.fieur-logo {
-		font-family: "Cormorant", serif;
-		font-size: 60px;
-		font-weight: 700;
-		color: #4E4E4E;
-		text-decoration: none;
-		transition: color 0.3s ease;
-	}
+  .fieur-logo {
+    font-family: "Cormorant", serif;
+    font-size: 60px;
+    font-weight: 700;
+    color: #4e4e4e;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
 
-	.fieur-logo:hover {
-		color: #a06b7a;
-	}
+  .fieur-logo:hover {
+    color: #a06b7a;
+  }
 
-	@media (max-width: 768px) {
-		.fieur-header {
-			padding: 0.75rem 1rem;
-		}
-		
-		.fieur-logo {
-			font-size: 2rem;
-		}
-	}
+  @media (max-width: 768px) {
+    .fieur-header {
+      padding: 0.75rem 1rem;
+    }
+
+    .fieur-logo {
+      font-size: 2rem;
+    }
+  }
 </style>
