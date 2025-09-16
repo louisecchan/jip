@@ -16,7 +16,7 @@
     "lint:fix": "eslint . --fix"
   },
   "dependencies": {
-    "@astrojs/node": "^9.4.3",
+    "@astrojs/netlify": "^6.5.0",
     "astro": "^5.13.2",
     "stripe": "^18.5.0",
     "typed.js": "^2.1.0"

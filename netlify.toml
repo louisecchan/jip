@@ -4,6 +4,7 @@
 
 [build.environment]
   NODE_VERSION = "18.20.8"
+  ROLLUP_USE_NODE_JS = "true"
 
 [[redirects]]
   from = "/api/*"
